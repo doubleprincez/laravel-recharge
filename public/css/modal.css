@@ -1,0 +1,84 @@
+$grey: #F5F5F5;
+$dark-grey: #323B40;
+
+$light-blue: #E0F5FF;
+$blue: #B9E5FE;
+$dark-blue: #00A5FA;
+
+$green: #B7E0DC;
+$dark-green: #019888;
+
+$lime: #C7E8C8;
+$dark-lime: #42B045;
+
+$yellow: #FFEEBA;
+$dark-yellow: #FF9901;
+
+$pink: #FABAD0;
+$dark-pink: #EF075F;
+
+$red: #FEC9C6;
+$dark-red: #FD3D08;
+
+@mixin color-div($color1, $color2){
+    background-color: $color1;
+    color: $color2;
+}
+
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem;
+}
+
+.panel {
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 0.2rem;
+
+  @include color-div($grey, $dark-grey);
+
+  &.panel-blue {
+    @include color-div($light-blue, $dark-blue);
+  }
+
+  &.panel-big-height{
+    min-height: 150px;
+  }
+}
+
+.item {
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin: 0.2rem;
+
+  &.item-blue {
+    @include color-div($blue, $dark-blue);
+  }
+
+  &.item-green {
+    @include color-div($green, $dark-green);
+  }
+
+  &.item-lime {
+    @include color-div($lime, $dark-lime);
+  }
+
+  &.item-yellow {
+    @include color-div($yellow, $dark-yellow);
+  }
+
+  &.item-pink {
+    @include color-div($pink, $dark-pink);
+  }
+
+  &.item-red {
+    @include color-div($red, $dark-red);
+  }
+
+  &.item-big-width{
+    min-width: 380px;
+  }
+}

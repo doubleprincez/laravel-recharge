@@ -1,0 +1,11 @@
+/* Add here all your CSS customizations */
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem + 12px) !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+

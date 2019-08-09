@@ -1,0 +1,44 @@
+*New Table Columns for user referral system
+*Use Two new plugins for setting active links and referral nesting in composer.json
+*Create new middleware to store cookie when created
+*add event to both login and register..... check them out (take not of includes too)
+*changed transactions Subscriber_id to subscriber_id
+*On Login Call Event to check if user is in last week of the month 
+and confirm if user has transaction costing more than 400
+*New Transaction table for Activation
+*moving the queues from sync to database you can run background listeners code using either:
+		php artisan queue:listen --tries=10
+		php artisan queue:work
+*Include disabled account check and can cashout per month 
+*On Login, Check if user account is activated if no redirect to activation page
+*Displaying referral_bonus, monthly_bonus and travelling_bonus in naira format
+*if special user/special percentage on user wallet
+* Change downlines Amount_paid to amount_paid
+*Display both installment or one time payment in activation page
+* Get all ancestors for the user paying and distribute specified percentage to their wallets + special Users.
+* Add check for special users and display special bonus
+* Add check if user account referrers is 10, make new referred a
+new root
+* Get all ancestors and update their level when new user registers
+* Set referral_level to have a default of level 1 when new registeration occur
+* session('error') set , you need to catch this error and display them;
+* prevent user from carrying out any transaction except user is active(status) and activated(verified)
+* Create transaction or activation record once successful payment and reward bonus to ancestors(referrer) and special users
+* Adding 10% service charge to paystack credentials
+you can find it in laravel-paystack/src/paystack.php makePaymentRequest() function.
+*Transactions Page display previous transactions 
+*Same Navbar for all pages and making individual pages display active
+* display transactions in table with reference to each transactions
+*updating transactions table to accommodate new transaction columns...
+*implement callback for paystack payment displaying confirmed account details for transaction
+*activation page for new members
+*add profile picture
+*make profile picture editable
+*Add CashOut button to home when user can cashout
+check if user is eligible to checkout ( used at least 400)per month
+check if user has withdrawn this month
+*check if there are previous cashouts
+*check if user has bank details else request for a new bank details
+*Once cashout request placed, every bonus is reseted and total amount is stored in cashout details
+*prevent users from withdrawing till the last week of the month
+* Confirm if user is activated else no check out too
