@@ -54,6 +54,7 @@
                             </button>
                         </div>
                         <!-- <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a> -->
+                        <!--TODO Fix dropdown for mobile view -->
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                             aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,8 +91,7 @@
                                document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -220,11 +220,12 @@
 
                     @endif
                 </div>
-
+                <button type="button" id="defaultServices" class="btn btn-primary float-right" onclick="setDefault()" style="display: none;">Standard services</button>
+                <button type="button" id="specialServices" class="btn btn-primary float-right" onclick="setSpecial()">Extra pay services</button>
                 <hr>
-                <h3>USER CONTROLS</h3>
+                <h3 id="dpMsg">USER CONTROLS - WITHOUT BONUS</h3>
                 <div class="row">
-                    <div id="recharge" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#form">
+                    <div id="rechargeBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#form">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -244,7 +245,7 @@
                     </div>
 
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#buyData">
+                    <div id="dataBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#buyData">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -265,7 +266,7 @@
                     </div>
 
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#cabletv">
+                    <div id="cableBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#cabletv">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -285,7 +286,7 @@
                     </div>
 
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#electricity">
+                    <div id="electricityBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#electricity">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -303,28 +304,28 @@
                         </div>
                     </div>
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#buyPin">
-                        <div class="card card-stats">
-                            <div class="card-body ">
-                                <div style="margin:10px;">
+                    {{--<div id="pinBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#buyPin">--}}
+                        {{--<div class="card card-stats">--}}
+                            {{--<div class="card-body ">--}}
+                                {{--<div style="margin:10px;">--}}
 
-                                    <div class="icon-big text-center icon-warning">
-                                        <i class="nc-icon nc-credit-card text-success"></i>
-                                    </div>
-                                    <div class="numbers">
-                                        <p class="card-category"
-                                           style="text-align:center !important; font-size: 16px; ">Buy Scratch card</p>
+                                    {{--<div class="icon-big text-center icon-warning">--}}
+                                        {{--<i class="nc-icon nc-credit-card text-success"></i>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="numbers">--}}
+                                        {{--<p class="card-category"--}}
+                                           {{--style="text-align:center !important; font-size: 16px; ">Buy Scratch card</p>--}}
 
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#wallet">
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+
+                    <div id="walletBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#wallet">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -346,7 +347,7 @@
                     </div>
 
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#Activate">
+                    <div id="activateBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#Activate">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">
@@ -363,7 +364,7 @@
                         </div>
                     </div>
 
-                    <div class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#Topup">
+                    <div id="topupBtn" class=" col-md-3 col-sm-6 to-modal" data-toggle="modal" data-target="#Topup">
                         <div class="card card-stats">
                             <div class="card-body ">
                                 <div style="margin:10px;">

@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{{ route('recharge') }}">
+            <form id="rechargeFrm" method="post" action="{{ route('recharge') }}">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="recharge_type" value="1"/>
@@ -50,7 +50,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('data') }}">
+            <form method="POST" id="dataFrm" action="{{ route('data') }}">
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" name="type" value="2"/>
@@ -154,7 +154,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('cable') }}">
+            <form id="cableFrm" method="POST" action="{{ route('cable') }}">
                 @csrf
                 <div class="modal-body">
 
@@ -211,44 +211,44 @@
     </div>
 </div>
 
-<!-- By Pin Card -->
-<div class="modal fade" id="buyPin"  tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <h5 class="modal-title" id="buyPin">Purchase Pin</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" action="{{ route('pin') }}">
-                @csrf
-                <input type="hidden" name="pin_type" value="3"/>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="pinNetworkId">Network</label>
-                        <select class="custom-select mr-sm-2 validate[required]" name="pin_network_id" id="pinNetworkId" required>
-                            <option value="" selected>Choose One</option>
-                            <option value="1">Airtel</option>
-                            <option value="3">Glo</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pinPhone">Phone Number </label>
-                        <input type="text" class="form-control" name="pin_phone" id="pinPhone" placeholder="Phone Number" required maxlength="11">
-                    </div>
-                    <div class="form-group">
-                        <label for="pinAmount">Amount</label>
-                        <input type="text" class="form-control" name="pin_amount" id="pinAmount" placeholder="Amount" required maxlength="8">
-                    </div>
-                </div>
-                <div class="modal-footer border-top-0 d-flex justify-content-center">
-                    <button type="submit" onsubmit="this.disabled=true;this.innerText='Subscribing…'" class="btn btn-success">Subscribe</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+{{--<!-- By Pin Card -->--}}
+{{--<div class="modal fade" id="buyPin"  tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
+    {{--<div class="modal-dialog" role="document">--}}
+        {{--<div class="modal-content">--}}
+            {{--<div class="modal-header border-bottom-0">--}}
+                {{--<h5 class="modal-title" id="buyPin">Purchase Pin</h5>--}}
+                {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                    {{--<span aria-hidden="true">&times;</span>--}}
+                {{--</button>--}}
+            {{--</div>--}}
+            {{--<form method="POST" action="{{ route('pin') }}">--}}
+                {{--@csrf--}}
+                {{--<input type="hidden" name="pin_type" value="3"/>--}}
+                {{--<div class="modal-body">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<label for="pinNetworkId">Network</label>--}}
+                        {{--<select class="custom-select mr-sm-2 validate[required]" name="pin_network_id" id="pinNetworkId" required>--}}
+                            {{--<option value="" selected>Choose One</option>--}}
+                            {{--<option value="1">Airtel</option>--}}
+                            {{--<option value="3">Glo</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group">--}}
+                        {{--<label for="pinPhone">Phone Number </label>--}}
+                        {{--<input type="text" class="form-control" name="pin_phone" id="pinPhone" placeholder="Phone Number" required maxlength="11">--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group">--}}
+                        {{--<label for="pinAmount">Amount</label>--}}
+                        {{--<input type="text" class="form-control" name="pin_amount" id="pinAmount" placeholder="Amount" required maxlength="8">--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="modal-footer border-top-0 d-flex justify-content-center">--}}
+                    {{--<button type="submit" onsubmit="this.disabled=true;this.innerText='Subscribing…'" class="btn btn-success">Subscribe</button>--}}
+                {{--</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</div>--}}
 
 
 <!-- wallet to wallet -->
@@ -261,7 +261,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{{ route('wallet') }}">
+            <form method="post" id="walletFrm" action="{{ route('wallet') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -296,7 +296,7 @@
 
             <div class="modal-body">
 
-                <form method="post" action="{{ route('electricity') }}">
+                <form method="post" id="electricityFrm" action="{{ route('electricity') }}">
                     @csrf
                     <div class="form-group">
                         <label for="Subscriber">Company</label>
@@ -413,7 +413,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{{ route('pay') }}">
+            <form method="post" id="payFrm" action="{{ route('pay') }}">
                 <div id="activateOthersMsg"></div>
                 @csrf
                 <div class="modal-body">
@@ -453,7 +453,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('pay') }}">
+            <form method="POST" id="topupFrm" action="{{ route('pay') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">

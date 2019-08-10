@@ -37,7 +37,15 @@ class DataController extends Controller
             $phone = filter_var(trim($request['phone']),FILTER_SANITIZE_NUMBER_INT);
             $networkID = filter_var(trim($request['networkID']),FILTER_SANITIZE_NUMBER_INT);
             $amount = filter_var(trim($request['amount']),FILTER_SANITIZE_NUMBER_INT);
+            $special = (int)filter_var(trim($request['special']),FILTER_SANITIZE_NUMBER_INT);
 
+            if($special === 1){
+                $get_fee = config('app.payment_fee');
+                $set_fee = $this->setPercent($get_fee,$amount);
+
+            }else{
+                $set_fee = 0;
+            }
 
         $data = array('details' => array(
             'ref'=>'',
@@ -51,7 +59,7 @@ class DataController extends Controller
 
             if($data_response->confirmationCode === 200){
 //            save to transaction table
-              $this->saveDataTransaction($data_response['details']);
+              $this->saveDataTransaction($data_response['details'],$set_fee);
                 return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
             }elseif($data_response->confirmationCode  === 301){
                 return redirect()->back()->with('error','No Admin Credentials Set Yet');

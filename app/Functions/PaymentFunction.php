@@ -274,7 +274,7 @@ trait PaymentFunction
 
     }
 
-    private function saveDataTransaction($content)
+    private function saveDataTransaction($content,$fee=null)
     {
         // Check if record already exists
         $check = Data::where('reference', '=', $content['referenceID']);
@@ -290,23 +290,23 @@ trait PaymentFunction
         $transaction->reference = $content['referenceID'];
         $transaction->service_id = $content['networkid'];
         $transaction->service_code;
-        $transaction->amount = $content['amount'];
+        $transaction->amount = ($content['amount']+$fee);
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             // deduct from account
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= $content['amount'];
+            $wallet->balance -= ($content['amount']+$fee);
             $wallet->update();
             $transaction->save();
-            $this->rewardReferrer($content['amount'], auth()->user());
+            if($fee!=null && $fee!=0){
+                $this->rewardReferrer($content['amount'], auth()->user());
+            }
         }
-
-
     }
 
-    private function saveRechargeTransaction($promise)
+    private function saveRechargeTransaction($promise,$fee = null)
     {
         // Check if record already exists
         $check = Recharge::where('reference', '=', $promise->referenceID);
@@ -322,20 +322,22 @@ trait PaymentFunction
         $transaction->reference = $promise->referenceID;
         $transaction->service_id = $promise->networkid;
         $transaction->service_code;
-        $transaction->amount = $promise->amount;
+        $transaction->amount = ($promise->amount+$fee);
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= $promise->amount;
+            $wallet->balance -= ($promise->amount+$fee);
             $wallet->update();
             $transaction->save();
-            $this->rewardReferrer($promise->amount, auth()->user());
+            if($fee!= null && $fee!=0){
+                $this->rewardReferrer($promise->amount, auth()->user());
+            }
         }
     }
 
-    private function saveCableTransaction($promise)
+    private function saveCableTransaction($promise,$fee=null)
     {
         // Check if record already exists
         $check = Recharge::where('reference', '=', $promise->referenceID);
@@ -351,20 +353,23 @@ trait PaymentFunction
         $transaction->reference = $promise->referenceID;
         $transaction->service_id = $promise->networkid;
         $transaction->service_code;
-        $transaction->amount = $promise->amount;
+        $transaction->amount = $promise->amount+$fee;
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= $promise->amount;
+            $wallet->balance -= ($promise->amount+$fee);
             $wallet->update();
             $transaction->save();
-            $this->rewardReferrer($promise->amount, auth()->user());
+            // Only Fund when special
+            if($fee!=null && $fee!=0){
+                $this->rewardReferrer($promise->amount, auth()->user());
+            }
         }
     }
 
-    private function savePinTransaction($promise ){
+    private function savePinTransaction($promise ,$fee=null){
         // Check if record already exists
         $check = Pin::where('reference', '=', $promise->referenceID);
         if ($check->count() > 0) {
@@ -380,20 +385,21 @@ trait PaymentFunction
         $pin->service_id = $promise->networkid;
         $pin->service_type = $promise->type;
         $pin->service_code;
-        $pin->amount = $promise->amount;
+        $pin->amount = ($promise->amount+$fee);
 
         if ($check->count() > 0) {
             $pin->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= $promise->amount;
+            $wallet->balance -= ($promise->amount+$fee);
             $wallet->update();
             $pin->save();
+            if($fee!=null && $fee!= 0)
             $this->rewardReferrer($promise->amount, auth()->user());
         }
     }
 
-    private function saveWalletTransaction($current_user,$receiver_wallet,$amount){
+    private function saveWalletTransaction($current_user,$receiver_wallet,$amount,$fee=null){
         $transaction = new Transaction();
         $transaction->subscriber_id = $current_user->id; // Sender Id
         $transaction->type = "wallet"; // wallet to wallet
@@ -402,8 +408,10 @@ trait PaymentFunction
         $transaction->amount =  $amount;
         $transaction->status = "success";
         $transaction->service_id = $receiver_wallet->id; // service id = wallet of receiver id
-
         $transaction->save();
+        if($fee!=null && $fee!= 0){
+            $this->rewardReferrer($amount,auth()->user());
+        }
 
     }
 }

@@ -189,6 +189,7 @@ return [
         Watson\Active\ActiveServiceProvider::class,
         Unicodeveloper\Paystack\PaystackServiceProvider::class,
         Obrignoni\Webhooks\WebhooksServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 //        Nestable\NestableServiceProvider::class,
         /*
          * Application Service Providers...

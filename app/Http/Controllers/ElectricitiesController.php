@@ -25,7 +25,15 @@ class ElectricitiesController extends Controller
             $customer_phone = filter_var(trim($request['customer_phone']), FILTER_DEFAULT);
             $account = filter_var(trim($request['account']), FILTER_DEFAULT);
             $amount = filter_var(trim($request['amount']), FILTER_SANITIZE_NUMBER_INT);
+            $special = (int)filter_var(trim($request['special']),FILTER_SANITIZE_NUMBER_INT);
 
+            if($special === 1){
+                $get_fee = config('app.payment_fee');
+                $set_fee = $this->setPercent($get_fee,$amount);
+
+            }else{
+                $set_fee = 0;
+            }
 
             if ($type == '10' || $type == '11' || $type == '15' || $type == '16') {
 
@@ -56,7 +64,7 @@ class ElectricitiesController extends Controller
                             if ($data_response->confirmationCode === 200) {
 
 //            save to transaction table
-                                $this->saveCableTransaction($data_response['details']);
+                                $this->saveCableTransaction($data_response['details'],$set_fee);
                                 return redirect('home')->with([$data_response, ['success' => 'Purchase Successful']]);
                             }
                             elseif ($data_response->confirmationCode === 301) {

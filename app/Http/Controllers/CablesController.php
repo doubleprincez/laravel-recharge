@@ -21,6 +21,7 @@ class CablesController extends Controller
      */
     public function index(Request $request)
     {
+
         try{
             $this->validate($request,[
                 'cable'=> 'required',
@@ -32,7 +33,16 @@ class CablesController extends Controller
             $mobile_number = filter_var(trim($request['customer_number']),FILTER_SANITIZE_NUMBER_INT);
             $networkID = filter_var(trim($request['networkID']),FILTER_SANITIZE_NUMBER_INT);
             $amount = filter_var(trim($request['amount']),FILTER_SANITIZE_NUMBER_INT);
+            $special = (int)filter_var(trim($request['special']),FILTER_SANITIZE_NUMBER_INT);
 
+            // Set Fee when user requests have special field
+            if($special === 1){
+               $get_fee = config('app.payment_fee');
+               $set_fee = $this->setPercent($get_fee,$amount);
+
+            }else{
+               $set_fee = 0;
+            }
 
             $data = array('details' => array(
                 'ref'=>'',
@@ -41,12 +51,12 @@ class CablesController extends Controller
                 'type'=>$type,
             ));
 
-             $data_response  = json_decode( $this->prepareAirvendRequest($data),false) ;
+            $data_response  = json_decode( $this->prepareAirvendRequest($data),false) ;
 
             if($data_response->confirmationCode === 200){
 
 //            save to transaction table
-                $this->saveCableTransaction($data_response['details']);
+                $this->saveCableTransaction($data_response['details'],$set_fee);
                 return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
             }elseif($data_response->confirmationCode  === 301){
                 return redirect()->back()->with('error','No Admin Credentials Set Yet');

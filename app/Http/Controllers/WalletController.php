@@ -31,8 +31,14 @@ class WalletController extends Controller
             ]);
 
             $wallet_id = trim($request['wallet_id']);
-
             $amount = (int)trim($request['amount']);
+            $special = (int)filter_var(trim($request['special']),FILTER_SANITIZE_NUMBER_INT);
+
+            if($special === 1){
+
+            }else{
+
+            }
 
             // checks if current logged in user owns the wallet
             if($receiver_wallet = $this->getWallet($wallet_id)){

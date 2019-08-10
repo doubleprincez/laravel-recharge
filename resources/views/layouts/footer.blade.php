@@ -27,6 +27,31 @@
     <!--modal-->
     <script type="text/javascript">
 
+        let defaultServices = $('#defaultServices'); let specialServices = $('#specialServices');
+        let rechargeFrm = $('#rechargeFrm'); let dataFrm = $('#dataFrm');
+        let includeToAll ='<input type="hidden" id="special" name="special" value="1" />';
+        let cableFrm = $('#cableFrm'); let walletFrm = $('#walletFrm');
+        let electricityFrm = $('#electricityFrm'); let payFrm = $('#payFrm');
+        let topupFrm = $('#topupFrm'); let messenger = $('#dpMsg');
+
+        function setDefault() {
+            defaultServices.hide();
+            specialServices.show();
+            messenger.html('USER CONTROLS - WITHOUT BONUS');
+            $('#special').remove();
+
+        }
+
+        function setSpecial() {
+           specialServices.hide(); defaultServices.show();
+           messenger.html('USER CONTROLS - WITH BONUS <br/><small>Note: a fee of 10% will be added to all transactions</small>');
+            rechargeFrm.prepend(includeToAll);cableFrm.prepend(includeToAll);
+            cableFrm.prepend(includeToAll); walletFrm.prepend(includeToAll);
+            electricityFrm.prepend(includeToAll); payFrm.prepend(includeToAll);
+            topupFrm.prepend(includeToAll);
+
+        }
+
         $('#mobile9').hide();
         $('#glo').hide();
         $('#airtel').hide();

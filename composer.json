@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "atayahmet/laravel-nestable": "^0.8.9",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "~6.0",
         "kalnoy/nestedset": "^4.3",
