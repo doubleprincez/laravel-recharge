@@ -21,9 +21,11 @@ class CreateRechargesTable extends Migration
             $table->string('account')->nullable();
             $table->string('type');
             $table->string('network_id');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->string('amount');
+            $table->string('balance')->nullable();
             $table->string('validity');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

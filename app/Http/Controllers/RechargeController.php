@@ -54,7 +54,7 @@ class RechargeController extends Controller
             if($data_response->confirmationCode === 200){
 
 //            save to transaction table
-                $this->saveRechargeTransaction($data_response['details'],$set_fee);
+                $this->saveRechargeTransaction($data_response['details'],$set_fee,$phone);
                 return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
             }elseif($data_response->confirmationCode  === 301){
                 return redirect()->back()->with('error','No Admin Credentials Set Yet');

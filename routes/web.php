@@ -44,3 +44,17 @@ Route::post('/fetchWalletAccount','HomeController@getAccountDetails');
 Route::post('/submitPayForOthers','PaymentController@payForOthers');
 Route::put('profile','ProfileController@update')->name('profile.update');
 Route::post('cashout','TransactionController@cashout_create')->name('cashout.create');
+
+/// Admin Dashboard
+
+Route::get('admin-page','AdminDashboardController@index')->name('admin.index');
+Route::get('admin-add','AdminDashboardController@add')->name('admin.add');
+Route::get('admins','AdminDashboardController@admins')->name('admins');
+Route::get('admin-webset','AdminDashboardController@webSettings')->name('admin.webset');
+Route::get('admin-usbonus','AdminDashboardController@usBonus')->name('admin.usbonus');
+Route::get('admin-spcbonus','AdminDashboardController@spcBonus')->name('admin.spcbonus');
+Route::get('admin-airtime','AdminDashboardController@airtime')->name('admin.airtime');
+Route::get('admin-cabletv','AdminDashboardController@cable')->name('admin.cabletv');
+Route::get('admin-datapurchase','AdminDashboardController@dataPurchase')->name('admin.datapurchase');
+Route::get('admin.pin','AdminDashboardController@pin')->name('admin.pin');
+Route::get('admin-electric','AdminDashboardController@electric')->name('admin.electric');

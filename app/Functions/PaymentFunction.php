@@ -369,35 +369,35 @@ trait PaymentFunction
         }
     }
 
-    private function savePinTransaction($promise ,$fee=null){
-        // Check if record already exists
-        $check = Pin::where('reference', '=', $promise->referenceID);
-        if ($check->count() > 0) {
-            $pin = $check->first();
-        } else {
-            $pin = new Pin();
-        }
-
-        $pin->user_id = auth()->id();
-        $pin->type = $promise->type;
-        $pin->transaction_id = $promise->TransactionID;
-        $pin->reference = $promise->referenceID;
-        $pin->service_id = $promise->networkid;
-        $pin->service_type = $promise->type;
-        $pin->service_code;
-        $pin->amount = ($promise->amount+$fee);
-
-        if ($check->count() > 0) {
-            $pin->update();
-        } else {
-            $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= ($promise->amount+$fee);
-            $wallet->update();
-            $pin->save();
-            if($fee!=null && $fee!= 0)
-            $this->rewardReferrer($promise->amount, auth()->user());
-        }
-    }
+//    private function savePinTransaction($promise ,$fee=null){
+//        // Check if record already exists
+//        $check = Pin::where('reference', '=', $promise->referenceID);
+//        if ($check->count() > 0) {
+//            $pin = $check->first();
+//        } else {
+//            $pin = new Pin();
+//        }
+//
+//        $pin->user_id = auth()->id();
+//        $pin->type = $promise->type;
+//        $pin->transaction_id = $promise->TransactionID;
+//        $pin->reference = $promise->referenceID;
+//        $pin->service_id = $promise->networkid;
+//        $pin->service_type = $promise->type;
+//        $pin->service_code;
+//        $pin->amount = ($promise->amount+$fee);
+//
+//        if ($check->count() > 0) {
+//            $pin->update();
+//        } else {
+//            $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
+//            $wallet->balance -= ($promise->amount+$fee);
+//            $wallet->update();
+//            $pin->save();
+//            if($fee!=null && $fee!= 0)
+//            $this->rewardReferrer($promise->amount, auth()->user());
+//        }
+//    }
 
     private function saveWalletTransaction($current_user,$receiver_wallet,$amount,$fee=null){
         $transaction = new Transaction();

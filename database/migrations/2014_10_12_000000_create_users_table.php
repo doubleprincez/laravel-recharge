@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('mobile')->unique();
             $table->char('gender')->nullable();
-            $table->integer('wallet_id')->unique()->nullable();
+            $table->string('wallet_id')->unique()->nullable();
             $table->string('referral_code')->unique()->nullable();
             $table->boolean('status')->default(true);
             $table->string('avatar')->default('users/default.png');

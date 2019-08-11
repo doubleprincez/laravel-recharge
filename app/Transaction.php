@@ -28,4 +28,7 @@ class Transaction extends Model
         'status',
         'paid_at'
     ];
+    public function user(){
+        return $this->belongsTo(User::class,'subscriber_id','id');
+    }
 }

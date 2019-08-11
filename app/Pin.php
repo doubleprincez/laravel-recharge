@@ -27,4 +27,7 @@ class Pin extends Model
         'service_code',
         'amount'
     ];
+    public function user(){
+        return $this->belongsTo(User::class,'','');
+}
 }
