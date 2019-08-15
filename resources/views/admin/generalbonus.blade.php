@@ -39,6 +39,34 @@
           <div class="clearfix"></div>
 
           <div class="row">
+
+
+            <!-- do not touch -->
+                    <div class="col-md-4 col-sm-4 col-xs-12" hidden>
+                      <div class="x_panel tile fixed_height_320">
+                        <div class="x_content" hidden>
+                          <h4>App Usage across versions</h4>
+                          <div class="widget_summary">
+                            <div class="w_left w_25">
+                              <span>0.1.5.2</span>
+                            </div>
+                            <div class="w_center w_55">
+                              <div class="progress">
+                                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
+                                  <span class="sr-only">60% Complete</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="w_right w_20">
+                              <span>123k</span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end do not touch -->
+
             <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
@@ -53,8 +81,8 @@
                 <div class="x_content">
 
 
-                    <form class="form-horizontal form-label-left"  novalidate action="{{route('userbonus.put', ['id'=>$bonus['id']])}}" method="post">
-
+                    <form class="form-horizontal form-label-left"  novalidate action="{{route('userbonus.put', ['id'=>$bonus['id']])}}" method="get">
+@csrf
 
                       <span class="section">Users Bonus in %age</span>
 

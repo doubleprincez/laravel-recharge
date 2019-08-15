@@ -77,5 +77,5 @@ Route::get("/bonus/specialbonus/update/{id}",["uses"=>"AdminDashboardController@
 Route::get("/admin/update/{id}",["uses"=>"AdminLoginController@updateadmin", "as"=>"admin.detail"]);
 Route::POST("/Administrators/password/{id}",["uses"=>"AdminDashboardController@adminpassword", "as"=>"admin.password"]);
 Route::post("/administrators/include",["uses"=>"AdminDashboardController@save", "as"=>"admin.include"]);
-Route::post("/users/bonus/update",["uses"=>"AdminDashboardController@updatebonus", "as"=>"userbonus.put"]);
+Route::get("/users/bonus/update/{id}",["uses"=>"AdminDashboardController@updatebonus", "as"=>"userbonus.put"]);
 });

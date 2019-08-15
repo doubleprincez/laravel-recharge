@@ -150,8 +150,7 @@
                         <td>
                         <div class="form-group has-feedback col-md-4">
                         <input type="text" class="form-control" placeholder="percentage" name="percent" value="{{$special->specialpcent}}" />
-                        <i class="fa fa-percent form-control-feedback">
-                        </i>
+                        <i class="fa fa-percent form-control-feedback"></i>
                         </div>
                       </td>
                       <td>
