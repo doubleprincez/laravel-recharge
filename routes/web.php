@@ -60,7 +60,6 @@ route::group(array('prefix'=> 'cpanell'), function(){
   Route::get('admin-datapurchase','AdminDashboardController@dataPurchase')->name('admin.datapurchase');
   Route::get('admin.pin','AdminDashboardController@pin')->name('admin.pin');
   Route::get('admin-electric','AdminDashboardController@electric')->name('admin.electric');
-
 Route::get("/user/special/{id}",["uses"=>"AdminDashboardController@special", "as"=>"user.special"]);
 Route::get("/user/special/unset/{id}",["uses"=>"AdminDashboardController@specialunset", "as"=>"user.specialunset"]);
 Route::get("/admin/servies/",["uses"=>"AdminDashboardController@serve", "as"=>"admin.services"]);
@@ -74,12 +73,9 @@ Route::get("/bonus/travelling/{id}",["uses"=>"AdminDashboardController@resettrav
 Route::get("/bonus/travelling/update/{id}",["uses"=>"AdminDashboardController@updatetravelling", "as"=>"travel.update"]);
 Route::get("/bonus/festival/{id}",["uses"=>"AdminDashboardController@resetfestival", "as"=>"festival.reset"]);
 Route::get("/bonus/festival/update/{id}",["uses"=>"AdminDashboardController@updatefestival", "as"=>"festival.update"]);
-
-
-Route::get("/bonus/specialbonus/update/{id}/specialuser",["uses"=>"AdminDashboardController@updatespecialbonus", "as"=>"specialbonus.update"]);
-
-
+Route::get("/bonus/specialbonus/update/{id}",["uses"=>"AdminDashboardController@updatespecialbonus", "as"=>"specialbonus.update"]);
 Route::get("/admin/update/{id}",["uses"=>"AdminLoginController@updateadmin", "as"=>"admin.detail"]);
 Route::POST("/Administrators/password/{id}",["uses"=>"AdminDashboardController@adminpassword", "as"=>"admin.password"]);
 Route::post("/administrators/include",["uses"=>"AdminDashboardController@save", "as"=>"admin.include"]);
+Route::post("/users/bonus/update",["uses"=>"AdminDashboardController@updatebonus", "as"=>"userbonus.put"]);
 });

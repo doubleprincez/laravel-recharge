@@ -21,81 +21,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                   <li><a href="javascript:;"> Profile</a></li>
-                  <li>
-                    <a href="javascript:;">
-                      <span class="badge bg-red pull-right">50%</span>
-                      <span>Settings</span>
-                    </a>
-                  </li>
-                  <li><a href="javascript:;">Help</a></li>
+
                   <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                 </ul>
               </li>
 
-              <li role="presentation" class="dropdown">
-                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-envelope-o"></i>
-                  <span class="badge bg-green">6</span>
-                </a>
-                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                  <li>
-                    <a>
-                      <span class="image"><img src="{{asset(auth()->user()->avatar?'/storage/'.auth()->user()->avatar:'img/default-avatar.png')}}" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <a>
-                      <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                      <span>
-                        <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <div class="text-center">
-                      <a>
-                        <strong>See All Alerts</strong>
-                        <i class="fa fa-angle-right"></i>
-                      </a>
-                    </div>
-                  </li>
-                </ul>
-              </li>
             </ul>
           </nav>
         </div>
@@ -122,55 +52,59 @@
                 </div>
                 <div class="x_content">
 
-                  <form class="form-horizontal form-label-left" novalidate>
+
+                    <form class="form-horizontal form-label-left"  novalidate action="{{route('userbonus.put', ['id'=>$bonus['id']])}}" method="post">
 
 
-                    <span class="section">Users Bonus in %age</span>
+                      <span class="section">Users Bonus in %age</span>
 
-                    <div class="item form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Card Bonus <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input class="form-control col-md-7 col-xs-12"  name="name" placeholder="both name(s) e.g Ademola " required="required" type="text">
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cbonus">Card Bonus <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input class="form-control col-md-7 col-xs-12" value="{{$bonus['card_bonus']}}"  name="cbonus" placeholder="10.00%" required="required" type="text">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="item form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telephone">Festival Bonus<span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="tel"  name="phone" required="required"  class="form-control col-md-7 col-xs-12" placeholder="e.g 07053251478, 09026582791">
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fbonus">Festival Bonus<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text"  name="fbonus" required="required" value="{{$bonus['festival_bonus']}}"  class="form-control col-md-7 col-xs-12" placeholder="34.6%">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="item form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Monthly Bonus <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="email" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mbons">Monthly Bonus <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="email" name="mbonus" required="required" value="{{$bonus['monthly_bonus']}}" placeholder="56.9%" class="form-control col-md-7 col-xs-12">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="item form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Travelling Bonus <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <input type="email" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tbonus">Travelling Bonus <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="email" name="tbonus" placeholder="0.89%" value="{{$bonus['travelling_bonus']}}" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
                       </div>
-                    </div>
 
 
 
 
 
-                    <div class="ln_solid"></div>
-                    <div class="form-group">
-                      <div class="col-md-6 col-md-offset-3">
-                        <button type="submit" class="btn btn-primary">Cancel</button>
-                        <button id="send" type="submit" class="btn btn-success">Submit</button>
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                          <button type="reset" class="btn btn-primary">Cancel</button>
+                          <button  type="submit" class="btn btn-success">Submit</button>
+                        </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+
+
+
                 </div>
               </div>
             </div>

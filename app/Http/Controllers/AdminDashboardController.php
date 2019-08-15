@@ -10,6 +10,7 @@ use App\Recharge;
 use App\User;
 use App\adminlogin;
 use App\wallet;
+use App\Otherbonus;
 use DB;
 
 
@@ -94,7 +95,15 @@ class AdminDashboardController extends Controller
 
     public function updatespecialbonus(Request $request, $id)
     {
+      $wallet=wallet::where('owner_id', $id)->first();
+      $wallet->specialpcent=trim(strip_tags($request['percent']));
+      $wallet->save();
+      return redirect()->back()->with("success", "User Bonus Succefully updated");
+    }
 
+    public function updatebonus(Request $request, $id)
+    {
+dd($request->all());
 
       $wallet=wallet::where('owner_id', $id)->first();
       $wallet->specialpcent=trim(strip_tags($request['percent']));
@@ -204,7 +213,9 @@ class AdminDashboardController extends Controller
 
     public function usBonus()
     {
-        return view('admin.generalbonus');
+
+      $bonus=Otherbonus::first();
+        return view('admin.generalbonus')->with(['bonus' => $bonus]);
     }
 
     public function spcBonus()
