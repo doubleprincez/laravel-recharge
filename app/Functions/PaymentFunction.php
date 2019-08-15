@@ -5,6 +5,7 @@ namespace App\Functions;
 
 use App\Activation;
 use App\Airvend;
+use App\Cable;
 use App\Data;
 use App\Otherbonus;
 use App\Pin;
@@ -340,7 +341,7 @@ trait PaymentFunction
     private function saveCableTransaction($promise,$fee=null)
     {
         // Check if record already exists
-        $check = Recharge::where('reference', '=', $promise->referenceID);
+        $check = Cable::where('reference', '=', $promise->referenceID);
         if ($check->count() > 0) {
             $transaction = $check->first();
         } else {
@@ -351,6 +352,7 @@ trait PaymentFunction
         $transaction->type = $promise->type;
         $transaction->transaction_id = $promise->TransactionID;
         $transaction->reference = $promise->referenceID;
+        $transaction->account = $promise->account;
         $transaction->service_id = $promise->networkid;
         $transaction->service_code;
         $transaction->amount = $promise->amount+$fee;

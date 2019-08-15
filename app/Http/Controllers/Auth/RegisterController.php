@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\EventCreateCredentials;
-use App\Functions\ReferralFunction;
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cookie;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Webpatser\Uuid\Uuid;
 
 
@@ -48,15 +45,15 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'mobile'=>['required', 'string'],
-            'gender'=>['required', 'string','size:1'],
+            'mobile' => ['required', 'string'],
+            'gender' => ['required', 'string', 'size:1'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -75,20 +72,18 @@ class RegisterController extends Controller
 
 
         $wallet_id = Uuid::generate(1)->string;
-        $ref_code =  md5(Uuid::generate(4)->string);
+        $ref_code = md5(Uuid::generate(4)->string);
+        $gender = $data['gender'];
+        $user = User::create([
+            'name' => $data['name'],
+            'mobile' => $data['mobile'],
+            'gender' => $gender,
+            'wallet_id' => $wallet_id,
+            'referral_code' => $ref_code,
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])
+        ]);
 
-
-
-             $user= User::create([
-                 'gender' => $data['gender'],
-             'name' => $data['name'],
-             'mobile' => $data['mobile'],
-             'wallet_id' => $wallet_id,
-             'referral_code'=> $ref_code,
-             'email' => $data['email'],
-             'password' => Hash::make($data['password'])
-             ]);
-
-         return $user;
+        return $user;
     }
 }

@@ -47,14 +47,33 @@ Route::post('cashout','TransactionController@cashout_create')->name('cashout.cre
 
 /// Admin Dashboard
 
-Route::get('admin-page','AdminDashboardController@index')->name('admin.index');
-Route::get('admin-add','AdminDashboardController@add')->name('admin.add');
-Route::get('admins','AdminDashboardController@admins')->name('admins');
-Route::get('admin-webset','AdminDashboardController@webSettings')->name('admin.webset');
-Route::get('admin-usbonus','AdminDashboardController@usBonus')->name('admin.usbonus');
-Route::get('admin-spcbonus','AdminDashboardController@spcBonus')->name('admin.spcbonus');
-Route::get('admin-airtime','AdminDashboardController@airtime')->name('admin.airtime');
-Route::get('admin-cabletv','AdminDashboardController@cable')->name('admin.cabletv');
-Route::get('admin-datapurchase','AdminDashboardController@dataPurchase')->name('admin.datapurchase');
-Route::get('admin.pin','AdminDashboardController@pin')->name('admin.pin');
-Route::get('admin-electric','AdminDashboardController@electric')->name('admin.electric');
+// admin routes grouped
+route::group(array('prefix'=> 'cpanell'), function(){
+  Route::get('admin-page','AdminDashboardController@index')->name('admin.index');
+  Route::get('admin-add','AdminDashboardController@add')->name('admin.add');
+  Route::get('admins','AdminDashboardController@admins')->name('admins');
+  Route::get('admin-webset','AdminDashboardController@webSettings')->name('admin.webset');
+  Route::get('admin-usbonus','AdminDashboardController@usBonus')->name('admin.usbonus');
+  Route::get('admin-spcbonus','AdminDashboardController@spcBonus')->name('admin.spcbonus');
+  Route::get('admin-airtime','AdminDashboardController@airtime')->name('admin.airtime');
+  Route::get('admin-cabletv','AdminDashboardController@cable')->name('admin.cabletv');
+  Route::get('admin-datapurchase','AdminDashboardController@dataPurchase')->name('admin.datapurchase');
+  Route::get('admin.pin','AdminDashboardController@pin')->name('admin.pin');
+  Route::get('admin-electric','AdminDashboardController@electric')->name('admin.electric');
+
+Route::get("/user/special/{id}",["uses"=>"AdminDashboardController@special", "as"=>"user.special"]);
+Route::get("/admin/servies/",["uses"=>"AdminDashboardController@serve", "as"=>"admin.services"]);
+Route::get("/user/destroyer/{id}",["uses"=>"AdminDashboardController@userdestroy", "as"=>"user.delete"]);
+Route::get("/user/update/{id}",["uses"=>"AdminDashboardController@userupdate", "as"=>"user.update"]);
+Route::get("/bonus/card/{id}",["uses"=>"AdminDashboardController@resetcard", "as"=>"card.reset"]);
+Route::get("/bonus/card/update/{id}",["uses"=>"AdminDashboardController@updatecard", "as"=>"card.update"]);
+Route::get("/bonus/monthly/{id}",["uses"=>"AdminDashboardController@resetmonthly", "as"=>"monthly.reset"]);
+Route::get("/bonus/monthly/update/{id}",["uses"=>"AdminDashboardController@updatemonthly", "as"=>"monthly.update"]);
+Route::get("/bonus/travelling/{id}",["uses"=>"AdminDashboardController@resettravelling", "as"=>"travel.reset"]);
+Route::get("/bonus/travelling/update/{id}",["uses"=>"AdminDashboardController@updatetravelling", "as"=>"travel.update"]);
+Route::get("/bonus/festival/{id}",["uses"=>"AdminDashboardController@resetfestival", "as"=>"festival.reset"]);
+Route::get("/bonus/festival/update/{id}",["uses"=>"AdminDashboardController@updatefestival", "as"=>"festival.update"]);
+Route::get("/admin/update/{id}",["uses"=>"AdminLoginController@updateadmin", "as"=>"admin.detail"]);
+Route::POST("/Administrators/password/{id}",["uses"=>"AdminDashboardController@adminpassword", "as"=>"admin.password"]);
+Route::post("/administrators/include",["uses"=>"AdminDashboardController@save", "as"=>"admin.include"]);
+});

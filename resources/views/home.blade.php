@@ -162,7 +162,6 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('admin.index') }}">Admin</a>
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="card card-stats">
                             <div class="card-body ">
@@ -256,7 +255,7 @@
 
                                     </div>
 
-                                    <div class="numbers" data-toggle="modal" data-target="#myModal">
+                                    <div class="numbers" data-toggle="modal" data-target="#buyData">
                                         <p class="card-category"
                                            style="text-align:center !important; font-size: 16px; "> Purchase Mobile
                                             Data </p>
