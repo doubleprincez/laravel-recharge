@@ -80,6 +80,21 @@ class AdminDashboardController extends Controller
 
     }
 
+
+    public function specialunset($id)
+    {
+
+      $wallet=wallet::where('owner_id', $id)->first();
+      $wallet->special='0';
+      $wallet->save();
+      return redirect()->back()->with("success", "User Succefully Unset as special");
+
+    }
+
+
+
+
+
     public function userdestroy($id)
     {
       $user=user::where('id', $id)->first();
@@ -183,7 +198,13 @@ class AdminDashboardController extends Controller
 
     public function spcBonus()
     {
-        return view('admin.specialbonus');
+
+      $special=DB::table('users')
+      ->join('wallets','wallets.owner_id','=','users.id')
+      ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus','wallets.specialpcent')
+      ->where('wallets.special', 1)
+      ->get()->toArray();
+        return view('admin.specialbonus')->with(['special' => $special]);
     }
 
     public function airtime()

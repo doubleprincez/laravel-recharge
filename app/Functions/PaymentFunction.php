@@ -116,7 +116,7 @@ trait PaymentFunction
         //Special Users Get 10% from every transaction
         $spec_users = Wallet::where('special', true)->get();
         foreach ($spec_users as $spec_user) {
-            $spec_user->special_bonus += $this->setPercent(10, $amount);
+            $spec_user->special_bonus += $this->setPercent($spec_user->specialpcent, $amount);
             $spec_user->update();
         }
     }

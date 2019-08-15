@@ -126,29 +126,39 @@
                     <tr>
                       <th>FullName</th>
                       <th>Mobile</th>
-                        <th>Referral link</th>
-                        <th>Bonus %</th>
-                      <th>Status</th>
 
+                        <th>Bonus %</th>
+
+  <th>Bonus Earnings</th>
                       <th>Registration Date</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
 
 
-                  <form >
+                  @foreach( $special  as $special)
+                  <form method="get">
+                    @csrf
                     <tbody>
                       <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
+                        <td>{{$special->name}}</td>
+                        <td>{{$special->mobile}}</td>
                         <td>
-                          <div class="form-group col-md-8">
-                            <input class="form-control" type="text" name="percent"  placeholder="Bonus percentage e.g 1.0" style="border-radius:50px !important;">
-                        </div>
+                          <!-- <div class="form-group col-md-8">
+                            <input class="form-control" type="text" name="percent" value="{{$special->specialpcent}}"  placeholder="Bonus percentage e.g 1.0" style="border-radius:50px !important;">
+                        </div> -->
+
+                        <div class="form-group has-feedback col-md-4">
+
+    <input type="text" class="form-control" placeholder="percentage" value="{{$special->specialpcent}}" />
+    <i class="fa fa-percent form-control-feedback"></i>
+</div>
                       </td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
+                      <td>
+                        {{$special->special_bonus}}
+                      </td>
+
+                        <td>{{$special->created_at}}</td>
                         <td>
 
 
@@ -162,6 +172,8 @@
 
                     </tbody>
                   </form>
+
+                  @endforeach
                 </table>
 
 

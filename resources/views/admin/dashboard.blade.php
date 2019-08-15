@@ -177,9 +177,17 @@
                                             </button>
 
 
+                                              @if($item->special==0)
                                               <button  type="submit " class="btn btn-info btn-sm btn-round btn-sm"
                                                       > <a href="{{route('user.special', ['id'=>$item->id])}}">Make Special</a>
                                               </button>
+
+                                              @else
+                                              <button  type="submit " class="btn btn-info btn-sm btn-round btn-sm"
+                                                      > <a href="{{route('user.specialunset', ['id'=>$item->id])}}">Remove Special</a>
+                                              </button>
+
+                                              @endif
 
                                         </td>
                                     </tr>

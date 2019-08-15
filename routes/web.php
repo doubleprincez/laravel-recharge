@@ -62,6 +62,7 @@ route::group(array('prefix'=> 'cpanell'), function(){
   Route::get('admin-electric','AdminDashboardController@electric')->name('admin.electric');
 
 Route::get("/user/special/{id}",["uses"=>"AdminDashboardController@special", "as"=>"user.special"]);
+Route::get("/user/special/unset/{id}",["uses"=>"AdminDashboardController@specialunset", "as"=>"user.specialunset"]);
 Route::get("/admin/servies/",["uses"=>"AdminDashboardController@serve", "as"=>"admin.services"]);
 Route::get("/user/destroyer/{id}",["uses"=>"AdminDashboardController@userdestroy", "as"=>"user.delete"]);
 Route::get("/user/update/{id}",["uses"=>"AdminDashboardController@userupdate", "as"=>"user.update"]);
