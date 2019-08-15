@@ -74,6 +74,11 @@ Route::get("/bonus/travelling/{id}",["uses"=>"AdminDashboardController@resettrav
 Route::get("/bonus/travelling/update/{id}",["uses"=>"AdminDashboardController@updatetravelling", "as"=>"travel.update"]);
 Route::get("/bonus/festival/{id}",["uses"=>"AdminDashboardController@resetfestival", "as"=>"festival.reset"]);
 Route::get("/bonus/festival/update/{id}",["uses"=>"AdminDashboardController@updatefestival", "as"=>"festival.update"]);
+
+
+Route::get("/bonus/specialbonus/update/{id}/specialuser",["uses"=>"AdminDashboardController@updatespecialbonus", "as"=>"specialbonus.update"]);
+
+
 Route::get("/admin/update/{id}",["uses"=>"AdminLoginController@updateadmin", "as"=>"admin.detail"]);
 Route::POST("/Administrators/password/{id}",["uses"=>"AdminDashboardController@adminpassword", "as"=>"admin.password"]);
 Route::post("/administrators/include",["uses"=>"AdminDashboardController@save", "as"=>"admin.include"]);

@@ -129,7 +129,7 @@
 
                         <th>Bonus %</th>
 
-  <th>Bonus Earnings</th>
+                          <th>Bonus Earnings</th>
                       <th>Registration Date</th>
                       <th>Actions</th>
                     </tr>
@@ -137,39 +137,34 @@
 
 
                   @foreach( $special  as $special)
-                  <form method="get">
+                  <form action="{{route('specialbonus.update', ['id'=>$special->id])}}" method="get">
                     @csrf
                     <tbody>
                       <tr>
-                        <td>{{$special->name}}</td>
-                        <td>{{$special->mobile}}</td>
                         <td>
-                          <!-- <div class="form-group col-md-8">
-                            <input class="form-control" type="text" name="percent" value="{{$special->specialpcent}}"  placeholder="Bonus percentage e.g 1.0" style="border-radius:50px !important;">
-                        </div> -->
-
+                          {{$special->name}}
+                        </td>
+                        <td>
+                          {{$special->mobile}}
+                        </td>
+                        <td>
                         <div class="form-group has-feedback col-md-4">
-
-    <input type="text" class="form-control" placeholder="percentage" value="{{$special->specialpcent}}" />
-    <i class="fa fa-percent form-control-feedback"></i>
-</div>
+                        <input type="text" class="form-control" placeholder="percentage" name="percent" value="{{$special->specialpcent}}" />
+                        <i class="fa fa-percent form-control-feedback">
+                        </i>
+                        </div>
                       </td>
                       <td>
                         {{$special->special_bonus}}
                       </td>
 
-                        <td>{{$special->created_at}}</td>
                         <td>
-
-
-                          <button type="button" class="btn btn-danger btn-sm btn-round" >Delete</button>
-
-                             <button type="button" class="btn btn-info btn-sm btn-round" >Update</button>
+                          {{$special->created_at}}
+                        </td>
+                        <td>
+                             <button type="submit" class="btn btn-info btn-sm btn-round" >Update</button>
                         </td>
                       </tr>
-
-
-
                     </tbody>
                   </form>
 

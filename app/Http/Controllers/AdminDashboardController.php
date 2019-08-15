@@ -92,6 +92,17 @@ class AdminDashboardController extends Controller
     }
 
 
+    public function updatespecialbonus(Request $request, $id)
+    {
+
+
+      $wallet=wallet::where('owner_id', $id)->first();
+      $wallet->specialpcent=trim(strip_tags($request['percent']));
+      $wallet->save();
+      return redirect()->back()->with("success", "User Bonus Succefully updated");
+    }
+
+
 
 
 
