@@ -99,7 +99,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Total Number: {{ $descendants->count() }} </h4>
-                                    <code>https://goodnews.com.?ref='.{{ auth()->user()->referral_code }}</code>
+                                    <code>https://goodnews.com?ref={{ auth()->user()->referral_code }}</code>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

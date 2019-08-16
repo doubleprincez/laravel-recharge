@@ -90,12 +90,12 @@
              <form class="form-signin" method="POST" action="{{ route('login') }}">
                  @csrf
              <div class="form-group">
-               <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+               <input class="form-control" name="mobile" placeholder="Provide Mobile Number"  autofocus required>
                <!-- <label for="inputEmail">Email address</label> -->
              </div>
 
              <div class="form-group">
-               <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+               <input  type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="provide password">
                <!-- <label for="inputPassword">Password</label> -->
              </div>
 

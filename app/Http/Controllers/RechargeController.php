@@ -50,6 +50,7 @@ class RechargeController extends Controller
                 'type'=>$type,
                 'amount'=>$amount
             ));
+
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
 
             if ($wallet->wallet_balance > $amount) {
