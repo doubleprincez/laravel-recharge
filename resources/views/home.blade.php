@@ -32,7 +32,7 @@
                 <a href="#" class="simple-text logo-normal">
                     {{ auth()->user()->name }}
                     <div class="logo-image-big">
-                        Balance: &#8358;{{ number_format(auth()->user()->wallet->wallet_balance) }}
+                        Balance: &#8358;{{ number_format(auth()->user()->wallet->wallet_balance, 2) }}
                     </div>
                 </a>
             </div>
@@ -124,7 +124,7 @@
                                         <div class="numbers">
                                             <p class="card-category">WALLET</p>
                                             <p class="card-title" style="font-size: 18px !important;">
-                                                &#8358;{{ number_format(auth()->user()->wallet->wallet_balance) }}
+                                                &#8358;{{ number_format(auth()->user()->wallet->wallet_balance, 2) }}
                                             <p>
                                         </div>
                                     </div>

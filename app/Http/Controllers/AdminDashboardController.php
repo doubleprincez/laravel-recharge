@@ -133,7 +133,6 @@ class AdminDashboardController extends Controller
 
     public function updatebonus(Request $request, $id)
     {
-dd($request->all());
 
       $wallet=wallet::where('owner_id', $id)->first();
       $wallet->specialpcent=trim(strip_tags($request['percent']));
@@ -383,11 +382,31 @@ dd($request->all());
 
     public function dataPurchase()
     {
-        return view('admin.data');
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+            return view('admin.data');
+             }
+      else{
+
+        return redirect()->route('home');
+
+
+      }
+
     }
 
     public function electric()
     {
-        return view('admin.electricity');
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+return view('admin.electricity');      }
+      else{
+        return redirect()->route('home');
+      }
+
     }
 }

@@ -70,7 +70,6 @@ trait PaymentFunction
 
             // Get Referrer Wallet
             $ref_wallet = Wallet::where('owner_id', '=', $pay_to->id)->firstOrFail();
-
             $ref_wallet->card_bonus += $this->setPercent($bonuses->card_bonus, $FFPercent);
             $ref_wallet->travelling_bonus += $this->setPercent($bonuses->travelling_bonus, $FFPercent);
             $ref_wallet->monthly_bonus += $this->setPercent($bonuses->monthly_bonus, $FFPercent);
@@ -100,7 +99,7 @@ trait PaymentFunction
         $to_pay = $this->setPercent(config('app.payment_fee'), $amount);
 
         if ($wallet->wallet_balance > ($to_pay + $amount)) {
-            dd('true');
+          
             return true;
         } else {
             return false;

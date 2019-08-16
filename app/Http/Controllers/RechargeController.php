@@ -60,8 +60,6 @@ class RechargeController extends Controller
                           $data_response  = json_decode($this->prepareAirvendRequest($data),false);
 
                           if($data_response->confirmationCode === 200){
-
-
               //            save to transaction table
                               $this->saveRechargeTransaction($data_response->details,$set_fee,$phone);
                               return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
