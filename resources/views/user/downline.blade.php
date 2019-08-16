@@ -28,13 +28,7 @@
             <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                            <button type="button" class="navbar-toggler">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </button>
-                        </div>
+                        
                         <!-- <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a> -->
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
@@ -57,7 +51,7 @@
                                    aria-expanded="false">
                                     <i class="nc-icon nc-user-run"></i>
                                     <p>
-                                        <span class="d-lg-none d-md-block">Some Actions</span>
+                                        <span class="d-lg-none d-md-block">User Menu</span>
                                     </p>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -91,7 +85,7 @@
             <div class="content">
                 <h2>Level: {{ auth()->user()->referral_level }}</h2>
                 <div class="row">
-                    <h5> Referred by: &nbsp;{{ auth()->user()->referred_by() }} </h5>
+                    <h5> Sponsor: &nbsp;{{ auth()->user()->referred_by() }} </h5>
 
                     @if(isset($descendants))
                         {{--name phone ref_id date_joined(created_at)--}}
@@ -99,7 +93,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Total Number: {{ $descendants->count() }} </h4>
-                                      <code>{{ config('app.url').'?ref='.auth()->user()->referral_code }}</code>
+                                      <code>{{ config('app.url').'/register/'.'?ref='.auth()->user()->referral_code }}</code>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Webpatser\Uuid\Uuid;
 
 use App\Cable;
 use App\Data;
@@ -65,11 +67,17 @@ class AdminDashboardController extends Controller
 
     public function save(Request $request)
     {
-      $admin =new adminlogin();
-      $admin->fullname=trim(strip_tags($request['name']));
-      $admin->telephone=trim(strip_tags($request['phone']));
+      $wallet_id = Uuid::generate(1)->string;
+      $ref_code = md5(Uuid::generate(4)->string);
+      $admin =new user();
+      $admin->name=trim(strip_tags($request['name']));
+      $admin->mobile=trim(strip_tags($request['phone']));
       $admin->email=trim(strip_tags($request['email']));
+      $admin->wallet_id = $wallet_id;
+      $admin->referral_code = $ref_code;
       $admin->password=Hash::make(trim(strip_tags($request['password'])));
+      $admin->isAdmin=1;
+      $admin->verified=1;
       $admin->save();
       return redirect()->back()->with("success", "User Succefully set as special");
 
