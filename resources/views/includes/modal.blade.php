@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label for="Subscriber">Subscriber</label>
                         <select  id="inlineFormCustomSelect" name="recharge_network_id" class="form-control" required>
-                            <option value="" selected>Choose...</option>
+                            <option >Choose...</option>
                             <option value="1">Airtel</option>
                             <option value="2">MTN</option>
                             <option value="3">GLO</option>
@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label for="Subscriber">Subscriber</label>
                         <select class="custom-select mr-sm-2 validate[required]"  name="networkID" id="mobdata"  required>
-                            <option value="" selected>Choose...</option>
+                            <option  >Choose...</option>
                             <option value="1">Airtel</option>
                             <option value="2">MTN</option>
                             <option value="3">GLO</option>
@@ -73,7 +73,7 @@
                     <div class="form-group" id="mobile9">
                         <label for="plan1">9Mobile Data Plan</label>
                         <select class="custom-select mr-sm-2 " id="dtplan1" name="amount" >
-                            <option value="" selected>Choose...</option>
+                            <option  >Choose...</option>
                             <option value="500">500 (500MB)</option>
                             <option value="1000">1000 (1GB)</option>
                             <option value="1200">1200 (1.5GB)</option>
@@ -89,7 +89,7 @@
                     <div class="form-group"   id="airtel">
                         <label for="plan">Airtel Data Plan</label>
                         <select class="custom-select mr-sm-2" id="dtplan" name="amount" >
-                            <option value="" selected>Choose..</option>
+                            <option  >Choose..</option>
                             <option value="300">300 (350MB + 10% Extra)</option>
                             <option value="500">500 (750MB + 10% Extra)</option>
                             <option value="1000">1000 (1.5GB + 10% Extra)</option>
@@ -106,7 +106,7 @@
                     <div class="form-group"  id="glo">
                         <label for="plan">Glo Data Plan</label>
                         <select class="custom-select mr-sm-2" id="dtplan" name="amount" >
-                            <option value="" selected>Choose...</option>
+                            <option  >Choose...</option>
                             <option value="200">200 (242MB)</option>
                             <option value="500">500 (920MB)</option>
                             <option value="1000">1000 (1.8GB)</option>
@@ -122,7 +122,7 @@
                     <div class="form-group" id="mtn">
                         <label for="plan">MTN Data Plan</label>
                         <select class="custom-select mr-sm-2" id="dtplan" name="amount">
-                            <option value="" selected>Choose...</option>
+                            <option >Choose...</option>
                             <option value="200">200 (100MB)</option>
                             <option value="500">500 (750MB)</option>
                             <option value="1000">1000 (1GB)</option>
@@ -136,7 +136,7 @@
 
                 </div>
                 <div class="modal-footer border-top-0 d-flex justify-content-center">
-                    <button type="submit" onsubmit="this.disabled=true;this.innerText='Subscribing…'" class="btn btn-success">Subscribe</button>
+                    <button type="submit"  class="btn btn-success">Subscribe</button>
                 </div>
             </form>
         </div>
@@ -159,13 +159,18 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="uid">Unique id</label>
-                        <input type="text" class="form-control" name="customer_number" id="uid" placeholder="Decoder ID" required maxlength="20">
+                        <label for="account">Unique id</label>
+                        <input type="text" class="form-control" name="account" id="uid" placeholder="Decoder ID" required maxlength="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer_name">Customer Name</label>
+                        <input type="text" class="form-control" name="customer_name" placeholder="Customer Name" required maxlength="20">
                     </div>
                     <div class="form-group">
                         <label for="Subscriber">Subscriber</label>
-                        <select class="custom-select mr-sm-2 validate[required]" name="cable" id="cable"   required>
-                            <option value="" selected>Choose One</option>
+                        <select class="custom-select mr-sm-2 validate[required]" name="type" id="cable"   required>
+                            <option >Choose One</option>
                             <option value="30">DSTV</option>
                             <option value="40">GOTV</option>
                         </select>
@@ -176,12 +181,12 @@
                     <div class="form-group"  id="gotv">
                         <label for="ctplan">GOTV PLANS</label>
                         <select class="custom-select mr-sm-2" id="ctplan" name="amount">
-                            <option value="" selected>Choose One</option>
-                            <option value="GOHAN">400 (GOTV LITE MONTHLY)</option>
-                            <option value="GOLITE">1050 (GOTV LITE QUATERLY)</option>
-                            <option value="GOTV">1250 (GOTV VALUE)</option>
-                            <option value="GOTVPLS">1900 (GOTV PLUS)</option>
-                            <option value="GOtvMax">3200 (GOTV MAX)</option>
+                            <option>Choose One</option>
+                            <option value="400">400 (GOTV LITE MONTHLY)</option>
+                            <option value="1050">1050 (GOTV LITE QUATERLY)</option>
+                            <option value="1250">1250 (GOTV VALUE)</option>
+                            <option value="1990">1900 (GOTV PLUS)</option>
+                            <option value="3200">3200 (GOTV MAX)</option>
                         </select>
                     </div>
 
@@ -190,15 +195,15 @@
                     <div class="form-group" id="dstv">
                         <label for="ctplan1">DSTV PLANS</label>
                         <select class="custom-select mr-sm-2" id="ctplan1" name="amount"  >
-                            <option value="" selected>Choose One</option>
-                            <option value="ACSSE36">2000 (DSTV ACCESS)</option>
-                            <option value="COFAME36">4000 (DSTV FAMILY)</option>
-                            <option value="ASIAE36">5400 (ASIAN BOUQET)</option>
-                            <option value="COMPE36">6000 (DSTV COMPACT)</option>
-                            <option value="COMPLE36">10650 (DSTV COMPACT PLUS)</option>
-                            <option value="PRWE36">15800 (DSTV PREMIUM)</option>
-                            <option value="PRWASIE36">17700 (DSTV PREMIUM ASIA)</option>
-                            <option value="ASIAE36">5400 (ASIAN BOUQET)</option>
+                            <option >Choose One</option>
+                            <option value="2000">2000 (DSTV ACCESS)</option>
+                            <option value="4000">4000 (DSTV FAMILY)</option>
+                            <option value="5400">5400 (ASIAN BOUQET)</option>
+                            <option value="6000">6000 (DSTV COMPACT)</option>
+                            <option value="10650">10650 (DSTV COMPACT PLUS)</option>
+                            <option value="15800">15800 (DSTV PREMIUM)</option>
+                            <option value="17700">17700 (DSTV PREMIUM ASIA)</option>
+                            <option value="5400">5400 (ASIAN BOUQET)</option>
                         </select>
                     </div>
 
@@ -301,7 +306,7 @@
                     <div class="form-group">
                         <label for="Subscriber">Company</label>
                         <select  id="elect"  class="form-control" required>
-                            <option value="" selected>Choose One</option>
+                            <option >Choose One</option>
                             <option value="1">Ikeja EDC</option>
                             <option value="2">Ibadan EDC Prepaid</option>
                             <option value="3">Eko EDC</option>
@@ -316,7 +321,7 @@
                         <div class="form-group" id="ikejaType">
                             <label >Type</label>
                             <select  class="form-control" >
-                                <option value="" selected>Choose One</option>
+                                <option>Choose One</option>
                                 <option value="10" >Ikeja Postpaid</option>
                                 <option value="11">Ikeja Prepaid</option>
                             </select>
@@ -326,21 +331,21 @@
                         </div>
                         <div class="form-group" id="ekoType" >
                             <select class="form-control" >
-                                <option value="" selected>Choose One</option>
+                                <option>Choose One</option>
                                 <option value="13" >Eko Postpaid</option>
                                 <option value="14">Eko Prepaid</option>
                             </select>
                         </div>
                         <div id="portType" class="form-group">
                             <select class="form-control" >
-                                <option value="" selected>Choose One</option>
+                                <option>Choose One</option>
                                 <option  value="15">Portharcourt Postpaid</option>
                                 <option value="16">Portharcourt Prepaid</option>
                             </select>
                         </div>
                         <div class="form-group" id="enuguType" >
                             <select class="form-control" >
-                                <option value="" selected>Choose One</option>
+                                <option >Choose One</option>
                                 <option value="21" >Enugu EDC Postpaid</option>
                                 <option value="22">Enugu EDC Prepaid</option>
                             </select>
@@ -364,7 +369,7 @@
                         <div class="form-group" id="lnd">
                             <label for="Subscriber">Landlord or Tenant</label>
                             <select  id="inlineFormCustomSelect" name="contact_type" class="form-control" >
-                                <option value="" selected>Choose One</option>
+                                <option>Choose One</option>
                                 <option value="tenant">Tenant</option>
                                 <option value="landlord">Landlord</option>
                             </select>

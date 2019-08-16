@@ -277,32 +277,32 @@ trait PaymentFunction
 
     private function saveDataTransaction($content,$fee=null)
     {
+
         // Check if record already exists
-        $check = Data::where('reference', '=', $content['referenceID']);
+        $check = Data::where('reference', '=', $content->referenceID);
         if ($check->count() > 0) {
             $transaction = $check->first();
         } else {
             $transaction = new Transaction();
         }
-
         $transaction->subscriber_id = auth()->id();
-        $transaction->type = $content['type'];
-        $transaction->transaction_id = $content['TransactionID'];
-        $transaction->reference = $content['referenceID'];
-        $transaction->service_id = $content['networkid'];
-        $transaction->service_code;
-        $transaction->amount = ($content['amount']+$fee);
+        $transaction->type = $content->type;
+        $transaction->transaction_id = $content->TransactionID;
+        $transaction->reference = $content->referenceID;
+        $transaction->service_id = $content->networkid;
+        $transaction->account = $content->account;
+        $transaction->amount = ($content->amount+$fee);
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             // deduct from account
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= ($content['amount']+$fee);
+            $wallet->wallet_balance -= ($content->amount+$fee);
             $wallet->update();
             $transaction->save();
             if($fee!=null && $fee!=0){
-                $this->rewardReferrer($content['amount'], auth()->user());
+                $this->rewardReferrer($content->amount, auth()->user());
             }
         }
     }
@@ -311,6 +311,7 @@ trait PaymentFunction
     {
         // Check if record already exists
         $check = Recharge::where('reference', '=', $promise->referenceID);
+
         if ($check->count() > 0) {
             $transaction = $check->first();
         } else {
@@ -322,14 +323,14 @@ trait PaymentFunction
         $transaction->transaction_id = $promise->TransactionID;
         $transaction->reference = $promise->referenceID;
         $transaction->service_id = $promise->networkid;
-        $transaction->service_code;
         $transaction->amount = ($promise->amount+$fee);
+        $transaction->account = $content->account;
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= ($promise->amount+$fee);
+            $wallet->wallet_balance -= ($promise->amount+$fee);
             $wallet->update();
             $transaction->save();
             if($fee!= null && $fee!=0){
@@ -342,26 +343,31 @@ trait PaymentFunction
     {
         // Check if record already exists
         $check = Cable::where('reference', '=', $promise->referenceID);
+
         if ($check->count() > 0) {
             $transaction = $check->first();
         } else {
             $transaction = new Transaction();
         }
 
-        $transaction->subscriber_id = auth()->id();
-        $transaction->type = $promise->type;
+        $transaction->user_id = auth()->id();
         $transaction->transaction_id = $promise->TransactionID;
         $transaction->reference = $promise->referenceID;
         $transaction->account = $promise->account;
-        $transaction->service_id = $promise->networkid;
-        $transaction->service_code;
-        $transaction->amount = $promise->amount+$fee;
+        $transaction->service_type = $promise->type;
+            if(  $transaction->amount != ""){
+                  $transaction->amount = $promise->amount+$fee;
+            }else{
+
+            }
+        $transaction->status = $promise->message;
+
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->balance -= ($promise->amount+$fee);
+            $wallet->wallet_balance -= ($promise->amount+$fee);
             $wallet->update();
             $transaction->save();
             // Only Fund when special

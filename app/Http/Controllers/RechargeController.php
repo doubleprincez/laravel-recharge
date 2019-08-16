@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Functions\PaymentFunction;
 use App\Recharge;
 use Illuminate\Http\Request;
+use App\Wallet;
+use App\user;
 
 class RechargeController extends Controller
 {
@@ -48,19 +50,31 @@ class RechargeController extends Controller
                 'type'=>$type,
                 'amount'=>$amount
             ));
+            $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
 
-            $data_response  = json_decode($this->prepareAirvendRequest($data),false);
+            if ($wallet->wallet_balance > $amount) {
 
-            if($data_response->confirmationCode === 200){
+                          $data_response  = json_decode($this->prepareAirvendRequest($data),false);
 
-//            save to transaction table
-                $this->saveRechargeTransaction($data_response['details'],$set_fee,$phone);
-                return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
-            }elseif($data_response->confirmationCode  === 301){
-                return redirect()->back()->with('error','No Admin Credentials Set Yet');
-            }else{
-                return redirect()->back()->with('error',$data_response->details->message);
+                          if($data_response->confirmationCode === 200){
+
+
+              //            save to transaction table
+                              $this->saveRechargeTransaction($data_response->details,$set_fee,$phone);
+                              return redirect('home')->with([$data_response,['success'=>'Purchase Successful']]);
+                          }elseif($data_response->confirmationCode  === 301){
+                              return redirect()->back()->with('error','No Admin Credentials Set Yet');
+                          }else{
+                              return redirect()->back()->with('error',$data_response->details->message);
+                          }
             }
+
+            else{
+                return redirect()->back()->with('error','insufficient Balance ');
+            }
+
+
+
         }catch(\Exception $e){
             return redirect()->back()->with('error',$e->getMessage(). ', line: '.$e->getLine());
         }
