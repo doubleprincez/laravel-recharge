@@ -42,9 +42,11 @@ class RechargeController extends Controller
             }else{
                 $set_fee = 0;
             }
+            $token = str_random(25);
+            $code = 'EN'. $token . substr(strftime("%Y", time()),2);
 
            $data = array('details' => array(
-                'ref'=>'',
+                'ref'=>$code,
                 'account'=>$phone,
                 'networkid'=>$networkID,
                 'type'=>$type,

@@ -314,6 +314,7 @@ trait PaymentFunction
 
         if ($check->count() > 0) {
             $transaction = $check->first();
+
         } else {
             $transaction = new Transaction();
         }
@@ -324,7 +325,7 @@ trait PaymentFunction
         $transaction->reference = $promise->referenceID;
         $transaction->service_id = $promise->networkid;
         $transaction->amount = ($promise->amount+$fee);
-        $transaction->account = $content->account;
+        $transaction->account = $promise->account;
 
         if ($check->count() > 0) {
             $transaction->update();
