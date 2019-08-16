@@ -12,6 +12,7 @@ use App\adminlogin;
 use App\wallet;
 use App\Otherbonus;
 use DB;
+use auth;
 
 
 class AdminDashboardController extends Controller
@@ -19,6 +20,7 @@ class AdminDashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     /**
@@ -30,16 +32,35 @@ class AdminDashboardController extends Controller
     {
       $users=DB::table('users')
       ->join('wallets','wallets.owner_id','=','users.id')
-      ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus')
+      ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.isAdmin','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus')
       ->get()->toArray();
       $information = User::with('referrer');
-      return view('admin.dashboard')->with(['info' => $information, 'users' => $users]);
+
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+        return view('admin.dashboard')->with(['info' => $information, 'users' => $users]);
+      }
+      else{
+        return redirect()->route('home');
+      }
+
     }
 
     public function add()
     {
 
-        return view('admin.adminplus');
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+        return view('admin.adminplus');      }
+      else{
+        return redirect()->route('home');
+      }
+
+
     }
 
     public function save(Request $request)
@@ -57,8 +78,17 @@ class AdminDashboardController extends Controller
 
     public function admins()
     {
-      $admin=adminlogin::all();
-        return view('admin.adminaction')->with(['info' => $admin]);
+
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+        $admin=adminlogin::all();
+          return view('admin.adminaction')->with(['info' => $admin]);    }
+      else{
+        return redirect()->route('home');
+      }
+
     }
 
 
@@ -134,8 +164,17 @@ dd($request->all());
       return redirect()->back()->with("success", "User Succefully Updated");
     }
 
-    public function serve(){
-      return view('admin.services');
+    public function serve()
+    {
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1){
+        return view('admin.services');     }
+      else{
+        return redirect()->route('home');
+      }
+
     }
 
 
@@ -208,25 +247,55 @@ dd($request->all());
 
     public function webSettings()
     {
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1)
+      {
         return view('admin.websettings');
+         }
+      else{
+        return redirect()->route('home');
+      }
+
     }
 
     public function usBonus()
     {
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1)
+      {
+        $bonus=Otherbonus::first();
+          return view('admin.generalbonus')->with(['bonus' => $bonus]);
+         }
+      else{
+        return redirect()->route('home');
+      }
 
-      $bonus=Otherbonus::first();
-        return view('admin.generalbonus')->with(['bonus' => $bonus]);
     }
 
     public function spcBonus()
     {
+      if (auth()->user()->isAdmin != 1) {
+          return redirect()->route('home');
+      }
+      else if(auth()->user()->isAdmin == 1)
+      {
+        $special=DB::table('users')
+        ->join('wallets','wallets.owner_id','=','users.id')
+        ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus','wallets.specialpcent')
+        ->where('wallets.special', 1)
+        ->get()->toArray();
+          return view('admin.specialbonus')->with(['special' => $special]);
+         }
+      else{
+        return redirect()->route('home');
+      }
 
-      $special=DB::table('users')
-      ->join('wallets','wallets.owner_id','=','users.id')
-      ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus','wallets.specialpcent')
-      ->where('wallets.special', 1)
-      ->get()->toArray();
-        return view('admin.specialbonus')->with(['special' => $special]);
+
+
     }
 
     public function airtime()
