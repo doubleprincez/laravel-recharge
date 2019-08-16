@@ -108,7 +108,6 @@
                                         <th>Reference</th>
                                         <th>Type</th>
                                         <th>Service Id</th>
-                                        <th>Service Code</th>
                                         <th>Amount</th>
                                         <th>Paid At</th>
                                         </thead>
@@ -118,9 +117,7 @@
                                                 <td>{{ $ref->id }}</td>
                                                 <td> {{ $ref->reference }} </td>
                                                 <td>{{ $ref->type }}</td>
-                                                <td> {{ $ref->service_id }} </td>
-                                                <td>{{ $ref->service_code }}</td>
-                                                <td>{{ $ref->service_name }}</td>
+                                                <td>{{ $ref->service_id }}</td>
                                                 <td> &#8358;{{ number_format($ref->amount,2) }}  </td>
                                                 <td> {{ date('d M Y',strtotime($ref->paid_at)) }} </td>
                                             </tr>

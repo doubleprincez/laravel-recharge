@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\wallet;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -73,6 +74,7 @@ class RegisterController extends Controller
 
         $wallet_id = Uuid::generate(1)->string;
         $ref_code = md5(Uuid::generate(4)->string);
+
         $gender = $data['gender'];
         $user = User::create([
             'name' => $data['name'],

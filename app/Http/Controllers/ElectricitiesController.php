@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Functions\PaymentFunction;
 use Illuminate\Http\Request;
+use App\Wallet;
+use App\user;
 
 class ElectricitiesController extends Controller
 {
@@ -95,10 +97,12 @@ class ElectricitiesController extends Controller
                     'amount' => $amount,
                 ));
 
+
+              }
+              $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
+              if ($wallet->wallet_balance > $amount) {
                 $data_response = json_decode($this->prepareAirvendRequest($data),false);
                 if ($data_response->confirmationCode === 200) {
-
-//            save to transaction table
                     $this->saveCableTransaction($data_response['details']);
                     return redirect('home')->with([$data_response, ['success' => 'Purchase Successful']]);
                 }
@@ -108,6 +112,10 @@ class ElectricitiesController extends Controller
                 else{
                     return redirect()->back()->with('error',$data_response->details->message);
                 }
+            }
+            else{
+              return redirect()->back()->with('error','insufficient Balance ');
+
             }
 
         } catch (\Exception $e) {
