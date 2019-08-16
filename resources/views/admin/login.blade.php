@@ -1,7 +1,7 @@
 @extends('layouts.script')
 <body style="background-image: url('img/bg.jpg');  ">
 @section('content')
-<div class=”container”>@if(\Session::has(‘error’))<div class=”alert alert-danger”>{{\Session::get(‘error’)}}</div>@endif
+<div class=”container”>@if(\Session::has('error'))<div class="alert alert-danger">{{\Session::get('error')}}</div>@endif
 <div class="container" style="margin:0 auto; padding-top:10%">
    <div class="row">
      <div class="col-sm-8 col-md-7 col-lg-5 mx-auto" >

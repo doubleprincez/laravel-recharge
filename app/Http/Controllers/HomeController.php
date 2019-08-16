@@ -30,6 +30,10 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function admin()
+    { return view('admin.login');
+    }
+
     public function getAccountDetails(Request $request){
         if($request->has('phone')){
             $phone = filter_var(trim($request['phone']),FILTER_SANITIZE_STRING);

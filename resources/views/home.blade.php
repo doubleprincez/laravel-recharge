@@ -40,7 +40,10 @@
                 @include('layouts.sidenav')
             </div>
         </div>
+        <?php if(auth()->user()->isAdmin == 1){?><div class="panel-body"><a href="{{url('admin/routes')}}">Admin</a></div><?php } else echo '<div class="panel-heading">Normal User</div>';?>
+
         <div class="main-panel">
+
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -54,7 +57,7 @@
                             </button>
                         </div>
                         <!-- <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a> -->
-                        <!--TODO Fix dropdown for mobile view -->
+                        <!-- T Fix dropdown for mobile view -->
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
                             aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">

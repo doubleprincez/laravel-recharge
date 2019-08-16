@@ -25,7 +25,7 @@
                 <li><a href="javascript:;"> Profile</a></li>
 
 
-                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
               </ul>
             </li>
 
