@@ -103,8 +103,8 @@ class WalletController extends Controller
         $receiver_wallet->update();
         $sender_wallet->update();
         $user = User::find(auth()->id());
-        $this->rewardReferrer($amount, $user);
-        $this->rewardSpecialUsers($amount);
+        $this->rewardReferrer($amount, $user,'wallet_to_wallet');
+        $this->rewardSpecialUsers($amount,'wallet_to_wallet');
         $this->saveWalletTransaction(auth()->user(), $receiver_wallet, $amount);
         return true;
     }

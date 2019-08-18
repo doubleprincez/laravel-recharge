@@ -8,8 +8,8 @@ use App\Airvend;
 use App\Cable;
 use App\Data;
 use App\Otherbonus;
-use App\Pin;
 use App\Recharge;
+use App\SpecialUserBonus;
 use App\Transaction;
 use App\User;
 use App\Wallet;
@@ -32,7 +32,7 @@ trait PaymentFunction
      * @param $node
      * @return mixed
      */
-    public function rewardReferrer($amount_paid, $node)
+    public function rewardReferrer($amount_paid, $node,$trasaction_type)
     {
         // Get 50 percent of the paid amount and share to all Ancestors
         $FFPercent = $this->setPercent(50, (float)$amount_paid);
@@ -50,7 +50,7 @@ trait PaymentFunction
             $this->setRefPayment($ancestor, $FFPercent, $bonuses);
         }
         // Reward 10 Special Users from the 50%
-        $this->rewardSpecialUsers($FFPercent);
+        $this->rewardSpecialUsers($FFPercent,$trasaction_type);
 
     }
 
@@ -99,7 +99,7 @@ trait PaymentFunction
         $to_pay = $this->setPercent(config('app.payment_fee'), $amount);
 
         if ($wallet->wallet_balance > ($to_pay + $amount)) {
-          
+
             return true;
         } else {
             return false;
@@ -109,14 +109,49 @@ trait PaymentFunction
     /**
      * Reward Special users 10% of the 50% of payment
      * @param $amount
+     * @param $transaction_type
      */
-    private function rewardSpecialUsers($amount)
+    private function rewardSpecialUsers($amount, $transaction_type)
     {
         //Special Users Get 10% from every transaction
         $spec_users = Wallet::where('special', true)->get();
+        // Get Special user's account bonus settings or create one
+        $bonus_setting = $this->getSpecialUserBonusSettings(auth()->id());
+
         foreach ($spec_users as $spec_user) {
-            $spec_user->special_bonus += $this->setPercent($spec_user->specialpcent, $amount);
+            if ($transaction_type === 'recharge_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->recharge_bonus, $amount);
+            } elseif ($transaction_type == 'data_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->data_bonus, $amount);
+            } elseif ($transaction_type == 'cable_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->cable_bonus, $amount);
+            } elseif ($transaction_type == 'electricity_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->electricity_bonus, $amount);
+            } elseif ($transaction_type == 'referrer_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->referrer_bonus, $amount);
+            } elseif ($transaction_type == 'top_up') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->top_up, $amount);
+            } elseif ($transaction_type == 'wallet-to-wallet') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->wallet_to_wallet, $amount);
+            }elseif ($transaction_type == 'activation_bonus') {
+                $spec_user->special_bonus += $this->setPercent($bonus_setting->activation_bonus, $amount);
+            }
+
             $spec_user->update();
+        }
+    }
+
+    private function getSpecialUserBonusSettings($user_id)
+    {
+        $settings = SpecialUserBonus::where('user_id', '=', (int)$user_id);
+        if ($settings->count() > 0) {
+            return $settings->first();
+        } else {
+
+            $settings = new SpecialUserBonus();
+            $settings->user_id = $user_id;
+            $settings->save();
+            return $settings;
         }
     }
 
@@ -149,7 +184,7 @@ trait PaymentFunction
             $trans->save();
             $user->wallet->update();
             // Share Reward to Referrers and special Users
-            $this->rewardReferrer($amount, $user);
+            $this->rewardReferrer($amount, $user,'top_up');
         }
 
     }
@@ -185,7 +220,7 @@ trait PaymentFunction
             $activation->update();
         } else {
             $activation->save();
-            $this->rewardReferrer($amount, $user);
+            $this->rewardReferrer($amount, $user,'activation_bonus');
         }
         if ((config('app.activation_fee') - $new_amount) <= 1) {
             $user->verified = 1;
@@ -217,7 +252,7 @@ trait PaymentFunction
     private function prepareAirvendRequest($content)
     {
         $url = (string)config('app.airvend_url');
-        return $this->sendAirvendRequest($url,$content);
+        return $this->sendAirvendRequest($url, $content);
     }
 
     /**
@@ -225,14 +260,16 @@ trait PaymentFunction
      * @param $content
      * @return mixed|string
      */
-    private function prepareVerifyAirvendRequest($content){
+    private function prepareVerifyAirvendRequest($content)
+    {
 
         $url = (string)config('app.airvend_verify_url');
-        return $this->sendAirvendRequest($url,$content);
+        return $this->sendAirvendRequest($url, $content);
     }
 
 
-    private function sendAirvendRequest($url,$content){
+    private function sendAirvendRequest($url, $content)
+    {
 
         $credentials = $this->getPaymentCredentials();
         if ($credentials && $credentials->count() > 0) {
@@ -242,7 +279,7 @@ trait PaymentFunction
             $password = strtolower(trim($credential->password));
             $hash_key = trim($credential->hash_key);
 
-             $content =   json_encode($content) ;
+            $content = json_encode($content);
 
             $before_hash = $content . $hash_key;
 
@@ -252,31 +289,30 @@ trait PaymentFunction
             $curl = curl_init();
             // array("Content-Type: application/json","username:$username","password:$password","hash:$hash")
             curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_HTTPHEADER,array("Content-Type: application/json","username:$username","password:$password","hash:$hash"));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "username:$username", "password:$password", "hash:$hash"));
             curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS,$content);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-           $response = curl_exec($curl);
+            $response = curl_exec($curl);
             $err = curl_error($curl);
 
             curl_close($curl);
 
             if ($err) {
-                return  json_encode(['confirmationCode'=>$err->confirmationCode,'error'=>$err]) ;
+                return json_encode(['confirmationCode' => $err->confirmationCode, 'error' => $err]);
             } else {
-                return   $response;
+                return $response;
             }
 
         } else {
-            return  json_encode(['confirmationCode' => 310]) ;
+            return json_encode(['confirmationCode' => 310]);
         }
 
     }
 
-    private function saveDataTransaction($content,$fee=null)
+    private function saveDataTransaction($content, $fee = null,$transaction_type)
     {
-
         // Check if record already exists
         $check = Data::where('reference', '=', $content->referenceID);
         if ($check->count() > 0) {
@@ -290,23 +326,23 @@ trait PaymentFunction
         $transaction->reference = $content->referenceID;
         $transaction->service_id = $content->networkid;
         $transaction->account = $content->account;
-        $transaction->amount = ($content->amount+$fee);
+        $transaction->amount = ($content->amount + $fee);
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             // deduct from account
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->wallet_balance -= ($content->amount+$fee);
+            $wallet->wallet_balance -= ($content->amount + $fee);
             $wallet->update();
             $transaction->save();
-            if($fee!=null && $fee!=0){
-                $this->rewardReferrer($content->amount, auth()->user());
+            if ($fee != null && $fee != 0) {
+                $this->rewardReferrer($content->amount, auth()->user(),$transaction_type);
             }
         }
     }
 
-    private function saveRechargeTransaction($promise,$fee = null)
+    private function saveRechargeTransaction($promise, $fee = null,$transaction_type)
     {
         // Check if record already exists
         $check = Recharge::where('reference', '=', $promise->referenceID);
@@ -323,23 +359,23 @@ trait PaymentFunction
         $transaction->transaction_id = $promise->TransactionID;
         $transaction->reference = $promise->referenceID;
         $transaction->service_id = $promise->networkid;
-        $transaction->amount = ($promise->amount+$fee);
+        $transaction->amount = ($promise->amount + $fee);
         $transaction->account = $promise->account;
 
         if ($check->count() > 0) {
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->wallet_balance -= ($promise->amount+$fee);
+            $wallet->wallet_balance -= ($promise->amount + $fee);
             $wallet->update();
             $transaction->save();
-            if($fee!= null && $fee!=0){
-                $this->rewardReferrer($promise->amount, auth()->user());
+            if ($fee != null && $fee != 0) {
+                $this->rewardReferrer($promise->amount, auth()->user(),$transaction_type);
             }
         }
     }
 
-    private function saveCableTransaction($promise,$fee=null)
+    private function saveCableTransaction($promise, $fee = null,$transaction_type)
     {
         // Check if record already exists
         $check = Cable::where('reference', '=', $promise->referenceID);
@@ -355,11 +391,9 @@ trait PaymentFunction
         $transaction->reference = $promise->referenceID;
         $transaction->account = $promise->account;
         $transaction->service_type = $promise->type;
-            if(  $transaction->amount != ""){
-                  $transaction->amount = $promise->amount+$fee;
-            }else{
-
-            }
+        if ($transaction->amount != "") {
+            $transaction->amount = $promise->amount + $fee;
+        }
         $transaction->status = $promise->message;
 
 
@@ -367,12 +401,12 @@ trait PaymentFunction
             $transaction->update();
         } else {
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
-            $wallet->wallet_balance -= ($promise->amount+$fee);
+            $wallet->wallet_balance -= ($promise->amount + $fee);
             $wallet->update();
             $transaction->save();
             // Only Fund when special
-            if($fee!=null && $fee!=0){
-                $this->rewardReferrer($promise->amount, auth()->user());
+            if ($fee != null && $fee != 0) {
+                $this->rewardReferrer($promise->amount, auth()->user(),$transaction_type);
             }
         }
     }
@@ -407,18 +441,19 @@ trait PaymentFunction
 //        }
 //    }
 
-    private function saveWalletTransaction($current_user,$receiver_wallet,$amount,$fee=null){
+    private function saveWalletTransaction($current_user, $receiver_wallet, $amount, $fee = null)
+    {
         $transaction = new Transaction();
         $transaction->subscriber_id = $current_user->id; // Sender Id
         $transaction->type = "wallet"; // wallet to wallet
-        $transaction->transaction_id= md5($current_user->id); // md5 of sender ID
+        $transaction->transaction_id = md5($current_user->id); // md5 of sender ID
         $transaction->reference = time(); // Current Time
-        $transaction->amount =  $amount;
+        $transaction->amount = $amount;
         $transaction->status = "success";
         $transaction->service_id = $receiver_wallet->id; // service id = wallet of receiver id
         $transaction->save();
-        if($fee!=null && $fee!= 0){
-            $this->rewardReferrer($amount,auth()->user());
+        if ($fee != null && $fee != 0) {
+            $this->rewardReferrer($amount, auth()->user());
         }
 
     }

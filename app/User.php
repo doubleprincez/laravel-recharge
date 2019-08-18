@@ -81,7 +81,7 @@ class User extends Authenticatable
     }
 
     public function special_user(){
-        $wallet =  Wallet::where('owner_id','=',auth()->id())->firstOrFail();
+        $wallet =  Wallet::where('owner_id','=',auth()->id())->with('wallet.owner')->firstOrFail();
         return $wallet->special === true;
     }
 
