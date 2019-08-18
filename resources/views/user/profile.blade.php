@@ -9,7 +9,7 @@
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text logo-mini">
                     <div class="logo-image-small">
-                        <img src="{{ asset('storage/'.auth()->user()->avatar) }}">
+                        <img src="{{ asset(auth()->user()->avatar) }}">
                     </div>
                 </a>
                 <a href="{{ url('/home') }}" class="simple-text logo-normal">
@@ -95,12 +95,12 @@
                         <div class="col-md-4">
                             <div class="card card-user">
                                 <div class="image">
-                                    <img src="{{ asset('storage/'.auth()->user()->avatar) }}">
+                                    <img src="{{ asset(auth()->user()->avatar) }}">
                                 </div>
                                 <div class="card-body">
                                     <div class="author">
                                         <a href="#">
-                                            <img class="avatar border-gray" src="{{ asset('storage/'.auth()->user()->avatar) }}">
+                                            <img class="avatar border-gray" src="{{ asset(auth()->user()->avatar) }}">
                                             <h5 class="title">{{ auth()->user()->name }}</h5>
                                         </a>
                                         <p class="description">

@@ -47,6 +47,7 @@ class ProfileController extends Controller
         $password = filter_var(trim($request['password']));
         $gender = filter_var(trim($request['gender']));
 
+        $fileNameToStore = '';
         //Handle File upload
         //Request should check data from form to have image file
         if ($request->hasFile('image')) {
@@ -59,7 +60,7 @@ class ProfileController extends Controller
             // Filename to store
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             // Upload image
-            $path = $request->file('image')->storeAs('public/users', $fileNameToStore);
+            $path = $request->file('image')->storeAs('public/img', $fileNameToStore);
 
         }
 
@@ -82,10 +83,10 @@ class ProfileController extends Controller
 
 //        Add this to image profile update from account
         if ($request->hasFile('image')) {
-            $update_user->avatar = 'users/' . $fileNameToStore;
+            $update_user->avatar = 'img/' . $fileNameToStore;
         }
         $update_user->save();
 
-        return view('user.profile_show')->with([session('success')=>'Upload Successful']);
+        return redirect('user.profile_show')->with([session('success')=>'Upload Successful']);
     }
 }

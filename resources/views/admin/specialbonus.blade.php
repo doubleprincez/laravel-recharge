@@ -15,17 +15,19 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{asset(auth()->user()->avatar?'/storage/'.auth()->user()->avatar:'img/default-avatar.png')}}" alt="">{{asset(auth()->user()->name?auth()->user()->name:'No Name')}}
+                  <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                     aria-expanded="false">
+                    <img src="{{ asset(auth()->user()->avatar ? auth()->user()->avatar:'img/default-avatar.png') }}"
+                         alt="No Thumbnail">
+                    {{  auth()->user()->name?auth()->user()->name:'No Name'}}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-
-                      <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li>
+                      <a href="{{ route('profile') }}">Profile Page</a>
+                    </li>
                   </ul>
                 </li>
-
-
               </ul>
             </nav>
           </div>
@@ -38,30 +40,48 @@
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-              <div class="count">2500</div>
+              <div class="count">{{ $info->count() }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
             </div>
+
+
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> Administrator Counts</span>
-              <div class="count">123.50</div>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Male User</span>
-              <div class="count green">2,500</div>
+              <div class="count">{{ __('10') }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
             </div>
+
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-user"></i> Total Male User</span>
+              <div class="count green">{{ $info->where('gender','=','M')->count() }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+
+            </div>
+
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Female User</span>
-              <div class="count">4,567</div>
+              <div class="count">{{ $info->where('gender','=','F')->count() }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+
             </div>
+
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i>Activated Account</span>
-              <div class="count">2,315</div>
+              <div class="count">{{ $info->where('verified','=',1)->count() }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+
             </div>
+
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Unactivacted Account</span>
-              <div class="count">7,325</div>
+              <div class="count">{{ $info->where('verified','=',0)->count() }}</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+
             </div>
+
+
           </div>
           <!-- /top tiles -->
 

@@ -19,21 +19,16 @@
                             <li class="">
                                 <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                    aria-expanded="false">
-                                    <img src="{{asset(auth()->user()->avatar?'/storage/'.auth()->user()->avatar:'img/default-avatar.png')}}"
-                                         alt="">
-                                    {{asset(auth()->user()->name?auth()->user()->name:'No Name')}}
+                                    <img src="{{ asset(auth()->user()->avatar ? auth()->user()->avatar:'img/default-avatar.png') }}"  alt="No Thumbnail">
+                                    {{  auth()->user()->name?auth()->user()->name:'No Name'}}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li>
                                      <a href="{{ route('profile') }}">Profile Page</a>
-
                                     </li>
-
-
                                 </ul>
                             </li>
-
 
                         </ul>
                     </nav>
@@ -48,7 +43,9 @@
                     <div class="row tile_count">
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-                            <div class="count">{{ $info->count() }}</div>
+                            <div class="count">{{ $info_day->count() }}<span>Day</span></div>
+                            <div class="count">{{ $info_month->count() }}<span>Month</span></div>
+                            <div class="count">{{ $info_year->count() }}<span>Year</span></div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
                         </div>
@@ -56,44 +53,48 @@
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-clock-o"></i> Administrator Counts</span>
-                            <div class="count">{{ __('10') }}</div>
+                            <div class="count">{{ $info_day->where('isAdmin','=','1')->count() }}<span>Day</span></div>
+                            <div class="count">{{ $info_month->where('isAdmin','=','1')->count() }}<span>Month</span></div>
+                            <div class="count">{{ $info_year->where('isAdmin','=','1')->count() }}<span>Year</span></div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
                         </div>
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Male User</span>
-                            <div class="count green">{{ $info->where('gender','=','M')->count() }}</div>
+                            <div class="count green">{{ $info_day->where('gender','=','M')->count() }}<span>Day</span></div>
+                            <div class="count green">{{ $info_month->where('gender','=','M')->count() }}<span>Month</span></div>
+                            <div class="count green">{{ $info_year->where('gender','=','M')->count() }}<span>Year</span></div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
                         </div>
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Female User</span>
-                            <div class="count">{{ $info->where('gender','=','F')->count() }}</div>
+                            <div class="count">{{ $info_day->where('gender','=','F')->count() }}<span>Day</span></div>
+                            <div class="count">{{ $info_month->where('gender','=','F')->count() }}<span>Month</span></div>
+                            <div class="count">{{ $info_year->where('gender','=','F')->count() }}<span>Year</span></div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
                         </div>
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i>Activated Account</span>
-                            <div class="count">{{ $info->where('verified','=',1)->count() }}</div>
-                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+                            <div class="count">{{ $info_year->where('verified','=',1)->count() }}</div>
+                            <span class="count_bottom"><i class="green"> Yearly</span>
 
                         </div>
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Unactivacted Account</span>
-                            <div class="count">{{ $info->where('verified','=',0)->count() }}</div>
-                            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+                            <div class="count">{{ $info_year->where('verified','=',0)->count() }}</div>
+                            <span class="count_bottom"> This year  </span>
 
                         </div>
 
 
                     </div>
                     <!-- /top tiles -->
-
-
                     <div class="row">
 
                         <!-- do not touch -->

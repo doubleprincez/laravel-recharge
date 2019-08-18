@@ -26,7 +26,7 @@
             <div class="logo">
                 <a href="{{ url('/home') }}" class="simple-text logo-mini">
                     <div class="logo-image-small">
-                        <img src="{{asset('storage/'.auth()->user()->avatar) }}" height="50" width="40">
+                        <img src="{{asset(auth()->user()->avatar) }}" height="50" width="40">
                     </div>
                 </a>
                 <a href="#" class="simple-text logo-normal">

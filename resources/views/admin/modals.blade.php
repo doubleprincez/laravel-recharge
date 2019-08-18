@@ -1,12 +1,4 @@
-
-
 <!-- delete User -->
-
-
-
-
-
-
 <div class="modal fade" id="editadmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

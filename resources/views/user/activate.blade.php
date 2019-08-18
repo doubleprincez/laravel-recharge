@@ -9,7 +9,7 @@
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text logo-mini">
                     <div class="logo-image-small">
-                        <img src="{{ asset('storage/'.auth()->user()->avatar) }}">
+                        <img src="{{ asset( .auth()->user()->avatar) }}">
                     </div>
                 </a>
                 <a href="{{ url('/home') }}" class="simple-text logo-normal">
