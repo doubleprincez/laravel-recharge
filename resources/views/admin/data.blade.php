@@ -40,32 +40,35 @@
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i>9mobile</span>
-              <div class="count">4,567</div>
+              <span class="count_top"><i class="fa fa-clock-o"></i>9mobile</span>
+              <div class="count">{{ $airtel_day->count() }}<span>Daily</span></div>
+              <div class="count">{{ $airtel_month->count() }}<span>Monthly</span></div>
+              <div class="count">{{ $airtel_year->count() }}<span>Yearly</span></div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i>Airtel</span>
-              <div class="count green">2,500</div>
+              <span class="count_top"><i class="fa fa-user"></i> Glo</span>
+              <div class="count green">{{ $glo_day->count() }}<span>Daily</span></div>
+              <div class="count green">{{ $glo_month->count() }}<span>Monthly</span></div>
+              <div class="count green">{{ $glo_year->count() }}<span>Years</span></div>
 
             </div>
-
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i>GLO</span>
-              <div class="count">4,567</div>
+              <span class="count_top"><i class="fa fa-user"></i> Mtn</span>
+              <div class="count">{{ $mtn_day->count() }}<span>Daily</span></div>
+              <div class="count">{{ $mtn_month->count() }}<span>Monthly</span></div>
+              <div class="count">{{ $mtn_year->count() }}<span>Years</span></div>
             </div>
-
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i>MTN</span>
-              <div class="count">123.50</div>
-            </div>
-
-                      <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i>Most Purchased (currently)</span>
-              <div class="count">GLO</div>
+              <div class="count">{{  $most_purchased_day? $most_purchased_day:"None"}}<span>Daily</span></div>
+              <div class="count">{{  $most_purchased_day? $most_purchased_day:"None"}}<span>Weekly</span></div>
+              <div class="count">{{  $most_purchased_day? $most_purchased_day  :"None"}}<span>Yearly</span></div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i>Most purchased by</span>
-              <div class="count">1</div>
+              <div class="count">{{ $most_purchase_by_day?$most_purchase_by_day->name:"No one" }}<span>Daily</span></div>
+              <div class="count">{{ $most_purchase_by_month?$most_purchase_by_month->name:"No one" }}<span>Monthly</span></div>
+              <div class="count">{{ $most_purchase_by_year?$most_purchase_by_year->name:"No one" }}<span>Yearly</span></div>
             </div>
           </div>
           <!-- /top tiles -->

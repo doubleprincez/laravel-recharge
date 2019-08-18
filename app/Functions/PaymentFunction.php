@@ -7,6 +7,7 @@ use App\Activation;
 use App\Airvend;
 use App\Cable;
 use App\Data;
+use App\Electricity;
 use App\Otherbonus;
 use App\Recharge;
 use App\SpecialUserBonus;
@@ -383,6 +384,43 @@ trait PaymentFunction
     {
         // Check if record already exists
         $check = Cable::where('reference', '=', $promise->referenceID);
+
+        if ($check->count() > 0) {
+            $transaction = $check->first();
+        } else {
+            $transaction = new Transaction();
+        }
+
+        $transaction->user_id = auth()->id();
+        $transaction->transaction_id = $promise->TransactionID;
+        $transaction->reference = $promise->referenceID;
+        $transaction->account = $promise->account;
+        $transaction->service_type = $promise->type;
+        if ($transaction->amount != "") {
+            $transaction->amount = $promise->amount + $fee;
+        }
+        $transaction->status = $promise->message;
+
+
+        if ($check->count() > 0) {
+            $transaction->update();
+        } else {
+            $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
+            $wallet->wallet_balance -= ($promise->amount + $fee);
+            $wallet->update();
+            $transaction->save();
+            // Only Fund when special
+            if ($fee != null && $fee != 0) {
+                $this->rewardReferrer($promise->amount, auth()->user(),$transaction_type);
+            }
+        }
+    }
+
+
+    private function saveElectricityTransaction($promise, $fee = null,$transaction_type)
+    {
+        // Check if record already exists
+        $check = Electricity::where('reference', '=', $promise->referenceID);
 
         if ($check->count() > 0) {
             $transaction = $check->first();

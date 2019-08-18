@@ -66,7 +66,7 @@ class ElectricitiesController extends Controller
                             if ($data_response->confirmationCode === 200) {
 
 //            save to transaction table
-                                $this->saveCableTransaction($data_response['details'],$set_fee,'electricity_bonus');
+                                $this->saveElectricityTransaction($data_response['details'],$set_fee,'electricity_bonus');
                                 return redirect('home')->with([$data_response, ['success' => 'Purchase Successful']]);
                             }
                             elseif ($data_response->confirmationCode === 301) {
