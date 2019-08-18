@@ -7,13 +7,6 @@
     <list id="4e6ce895-8cc8-4ada-a6a7-6a8bffe2416f" name="SpecialUserBonus Model" comment="Adding special bonus table and default rate of 10% to all fields, editable by admin" />
     <list default="true" id="5195c689-8596-4777-932a-9698610f5c11" name="Link Results to Admin view" comment="Populate all report pages from admin controller also Sanitize Dashboard controller">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/Functions/PaymentFunction.php" afterPath="$PROJECT_DIR$/app/Functions/PaymentFunction.php" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminDashboardController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminDashboardController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminLoginController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminLoginController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" afterPath="$PROJECT_DIR$/app/User.php" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -584,14 +577,21 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1566088984781</updated>
-      <workItem from="1566088984814" duration="933000" />
+      <workItem from="1566088984814" duration="1017000" />
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Populate all report pages from admin controller also Sanitize Dashboard controller">
+      <created>1566089931526</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1566089931526</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <option name="trackContextForNewChangelist" value="true" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340063000" />
+    <option name="totallyTimeSpent" value="340147000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -604,12 +604,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="224" y="10" width="1146" height="688" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32789856" sideWeight="0.49605522" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42095914" sideWeight="0.5118343" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3043478" sideWeight="0.5156538" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="SQL Formatter" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32628062" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3043478" sideWeight="0.48816568" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3043478" sideWeight="0.4843462" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Code Review" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3285968" sideWeight="0.525641" order="5" side_tool="false" content_ui="tabs" />
@@ -680,7 +679,8 @@
     <MESSAGE value="Include missing class:  modal-dialog-centered to affected modals" />
     <MESSAGE value="Add Admin Controller links and connect all data to view modal" />
     <MESSAGE value="Adding special bonus table and default rate of 10% to all fields, editable by admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding special bonus table and default rate of 10% to all fields, editable by admin" />
+    <MESSAGE value="Populate all report pages from admin controller also Sanitize Dashboard controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Populate all report pages from admin controller also Sanitize Dashboard controller" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
