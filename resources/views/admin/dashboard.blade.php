@@ -41,11 +41,12 @@
                 <!-- top tiles -->
                 <div class="row tile_count">
                     <div class="row tile_count">
+                        <?php $x = $info_year->count();  $y = $info_year->where('verified','=',1)->count(); $z= $info_year->where('verified','=',0)->count(); ?>
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
                             <div class="count">{{ $info_day->count() }}<span>Day</span></div>
                             <div class="count">{{ $info_month->count() }}<span>Month</span></div>
-                            <div class="count">{{ $info_year->count() }}<span>Year</span></div>
+                            <div class="count">{{ $x }}<span>Year</span></div>
                             <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
 
                         </div>
@@ -80,14 +81,14 @@
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i>Activated Account</span>
-                            <div class="count">{{ $info_year->where('verified','=',1)->count() }}</div>
-                            <span class="count_bottom"><i class="green"> Yearly</span>
+                            <div class="count">{{ $y }}</div>
+                            <span class="count_bottom"><i class="green"></i> Yearly</span>
 
                         </div>
 
                         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                             <span class="count_top"><i class="fa fa-user"></i> Unactivacted Account</span>
-                            <div class="count">{{ $info_year->where('verified','=',0)->count() }}</div>
+                            <div class="count">{{ $z }}</div>
                             <span class="count_bottom"> This year  </span>
 
                         </div>
@@ -110,7 +111,7 @@
                                             <div class="progress">
                                                 <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60"
                                                      aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-                                                    <span class="sr-only">60% Complete</span>
+                                                    <span class="sr-only">Complete</span>
                                                 </div>
                                             </div>
                                         </div>

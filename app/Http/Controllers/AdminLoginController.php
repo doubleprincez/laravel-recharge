@@ -7,15 +7,11 @@ use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('guest');
     }
+
 
 
     public function updateadmin(Request $request, $id)

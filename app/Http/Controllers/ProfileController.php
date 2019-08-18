@@ -83,10 +83,10 @@ class ProfileController extends Controller
 
 //        Add this to image profile update from account
         if ($request->hasFile('image')) {
-            $update_user->avatar = 'img/' . $fileNameToStore;
+            $update_user->avatar = 'storage/img/' . $fileNameToStore;
         }
         $update_user->save();
 
-        return redirect('user.profile_show')->with([session('success')=>'Upload Successful']);
+        return redirect('profile')->with([session('success')=>'Upload Successful']);
     }
 }
