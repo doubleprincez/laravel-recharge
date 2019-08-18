@@ -16,6 +16,8 @@ class PinController extends Controller
 //   public function index(Request $request){
 //
 //       try{
+//if(auth()->user()->status===1){
+//if(auth()->user()->can_withdraw === 1){
 //           $type= filter_var(trim($request['pin_type']),FILTER_SANITIZE_NUMBER_INT);
 //           $networkID = filter_var(trim($request['pin_network_Id']),FILTER_SANITIZE_NUMBER_INT);
 //           $amount = filter_var(trim($request['pin_amount']),FILTER_SANITIZE_NUMBER_INT);
@@ -49,6 +51,12 @@ class PinController extends Controller
 //           }else{
 //               return redirect()->back()->with('error',$data_response->details->message);
 //           }
+//} else {
+//    return redirect('/activate')->with(session('error', 'Activate Your Account to Continue'));
+//}
+//} else {
+//    return redirect('/home')->with(session('error'), 'Account Disabled');
+//}
 //       }catch(\Exception $e){
 //           return redirect()->back()->with('error',$e->getMessage(). ', line: '.$e->getLine());
 //       }
