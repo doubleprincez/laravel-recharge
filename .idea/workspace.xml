@@ -7,12 +7,9 @@
     <list id="4e6ce895-8cc8-4ada-a6a7-6a8bffe2416f" name="SpecialUserBonus Model" comment="Adding special bonus table and default rate of 10% to all fields, editable by admin" />
     <list id="5195c689-8596-4777-932a-9698610f5c11" name="Link Results to Admin view" comment="Populate all report pages from admin controller also Sanitize Dashboard controller" />
     <list id="dc7c7d63-c87a-4aca-8f34-fc24194f251d" name="Services Update" comment="Setting all services view for day month and year" />
-    <list id="5e8a4910-e7ab-480e-b65c-ab14f3ca71c9" name="Final Service Update" comment="Electricity report view update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list id="5e8a4910-e7ab-480e-b65c-ab14f3ca71c9" name="Final Service Update" comment="Electricity report view update" />
     <list default="true" id="d7493e63-b721-4648-9e65-2495b9c6e32b" name="Profile Update" comment="Fix Profile image location for update" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -641,7 +638,7 @@
       <option name="presentableId" value="LOCAL-00021" />
       <option name="project" value="LOCAL" />
       <updated>1566110269672</updated>
-      <workItem from="1566110269682" duration="2151000" />
+      <workItem from="1566110269682" duration="2356000" />
     </task>
     <task id="LOCAL-00022" summary="Fix Profile image location for update">
       <created>1566112401634</created>
@@ -650,12 +647,26 @@
       <option name="project" value="LOCAL" />
       <updated>1566112401634</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Electricity report view update">
+      <created>1566112440523</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1566112440523</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Fix Profile image location for update">
+      <created>1566112515126</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1566112515126</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <option name="trackContextForNewChangelist" value="true" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="362325000" />
+    <option name="totallyTimeSpent" value="362530000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -746,8 +757,8 @@
     <MESSAGE value="Populate all report pages from admin controller also Sanitize Dashboard controller" />
     <MESSAGE value="Change Login from email address to mobile number" />
     <MESSAGE value="Setting all services view for day month and year" />
-    <MESSAGE value="Electricity report view update" />
     <MESSAGE value="Add check for activated before checking account balance for all  user services" />
+    <MESSAGE value="Electricity report view update" />
     <MESSAGE value="Fix Profile image location for update" />
     <option name="LAST_COMMIT_MESSAGE" value="Fix Profile image location for update" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
