@@ -334,8 +334,12 @@ trait PaymentFunction
             // deduct from account
             $wallet = Wallet::where('owner_id', '=', auth()->id())->first();
             $wallet->wallet_balance -= ($content->amount + $fee);
-            $wallet->update();
-            $transaction->save();
+            if($wallet->update()){
+                $transaction->save();
+            }else{
+                $wallet->update();
+                $transaction->save();
+            }
             if ($fee != null && $fee != 0) {
                 $this->rewardReferrer($content->amount, auth()->user(),$transaction_type);
             }

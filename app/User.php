@@ -15,6 +15,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string referral_code
  * @property mixed email
  * @property string password
+ * @property int verified
+ * @property int isAdmin
  */
 class User extends Authenticatable
 {
@@ -26,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','mobile','wallet_id','referral_code'
+        'name', 'email', 'password','mobile','wallet_id','referral_code','isAdmin','verified'
     ];
 
     /**

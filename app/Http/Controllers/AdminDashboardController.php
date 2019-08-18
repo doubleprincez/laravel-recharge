@@ -1,20 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Webpatser\Uuid\Uuid;
 
+use App\adminlogin;
 use App\Cable;
 use App\Data;
+use App\Otherbonus;
 use App\Recharge;
 use App\User;
-use App\adminlogin;
 use App\wallet;
-use App\Otherbonus;
-use DB;
 use auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Webpatser\Uuid\Uuid;
 
 
 class AdminDashboardController extends Controller
@@ -32,90 +31,91 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-      $users=DB::table('users')
-      ->join('wallets','wallets.owner_id','=','users.id')
-      ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.isAdmin','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus')
-      ->get()->toArray();
-      $information = User::with('referrer');
+        $users = DB::table('users')
+            ->join('wallets', 'wallets.owner_id', '=', 'users.id')
+            ->select('users.id', 'users.name', 'users.mobile', 'users.created_at', 'Users.email', 'users.status', 'users.isAdmin', 'users.gender', 'users.wallet_id', 'wallets.wallet_balance', 'wallets.card_bonus', 'wallets.travelling_bonus', 'wallets.monthly_bonus', 'wallets.festival_bonus', 'wallets.special', 'wallets.special_bonus')
+            ->get()->toArray();
 
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
-        return view('admin.dashboard')->with(['info' => $information, 'users' => $users]);
-      }
-      else{
-        return redirect()->route('home');
-      }
+        $information = User::with('referrer');
+
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            return view('admin.dashboard')->with(['info' => $information, 'users' => $users]);
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 
     public function add()
     {
 
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
-        return view('admin.adminplus');      }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            return view('admin.adminplus');
+        } else {
+            return redirect()->route('home');
+        }
 
 
     }
 
     public function save(Request $request)
     {
-      $wallet_id = Uuid::generate(1)->string;
-      $ref_code = md5(Uuid::generate(4)->string);
-      $admin =new user();
-      $admin->name=trim(strip_tags($request['name']));
-      $admin->mobile=trim(strip_tags($request['phone']));
-      $admin->email=trim(strip_tags($request['email']));
-      $admin->wallet_id = $wallet_id;
-      $admin->referral_code = $ref_code;
-      $admin->password=Hash::make(trim(strip_tags($request['password'])));
-      $admin->isAdmin=1;
-      $admin->verified=1;
-      $admin->save();
-      return redirect()->back()->with("success", "User Succefully set as special");
+        try {
+            $wallet_id = Uuid::generate(1)->string;
 
+            $ref_code = md5(Uuid::generate(4)->string);
+            $admin = new user();
+            $admin->name = trim(strip_tags($request['name']));
+            $admin->mobile = trim(strip_tags($request['phone']));
+            $admin->email = trim(strip_tags($request['email']));
+            $admin->wallet_id = $wallet_id;
+            $admin->referral_code = $ref_code;
+            $admin->password = Hash::make(trim(strip_tags($request['password'])));
+            $admin->isAdmin = 1;
+            $admin->verified = 1;
+            $admin->save();
+            return redirect()->back()->with("success", "User Successfully set as special");
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with("error",$e->getMessage());
+        }
 
     }
 
     public function admins()
     {
 
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
-        $admin=adminlogin::all();
-          return view('admin.adminaction')->with(['info' => $admin]);    }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            $admin = adminlogin::all();
+            return view('admin.adminaction')->with(['info' => $admin]);
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 
 
-
     public function adminpassword(Request $request, $id)
     {
-      $admin=adminlogin::where('id', $id)->first();
-      $admin->password=Hash::make(trim(strip_tags($request['adminpassword'])));
-      $admin->save();
-      return redirect()->back()->with("success", "User Succefully set as special");
+        $admin = adminlogin::where('id', $id)->first();
+        $admin->password = Hash::make(trim(strip_tags($request['adminpassword'])));
+        $admin->save();
+        return redirect()->back()->with("success", "User Successfully set as special");
     }
 
     public function special($id)
     {
 
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->special='1';
-      $wallet->save();
-      return redirect()->back()->with("success", "User Succefully set as special");
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->special = '1';
+        $wallet->save();
+        return redirect()->back()->with("success", "User Successfully set as special");
 
     }
 
@@ -123,184 +123,174 @@ class AdminDashboardController extends Controller
     public function specialunset($id)
     {
 
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->special='0';
-      $wallet->save();
-      return redirect()->back()->with("success", "User Succefully Unset as special");
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->special = '0';
+        $wallet->save();
+        return redirect()->back()->with("success", "User Successfully Unset as special");
 
     }
 
 
     public function updatespecialbonus(Request $request, $id)
     {
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->specialpcent=trim(strip_tags($request['percent']));
-      $wallet->save();
-      return redirect()->back()->with("success", "User Bonus Succefully updated");
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->specialpcent = trim(strip_tags($request['percent']));
+        $wallet->save();
+        return redirect()->back()->with("success", "User Bonus Successfully updated");
     }
 
     public function updatebonus(Request $request, $id)
     {
 
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->specialpcent=trim(strip_tags($request['percent']));
-      $wallet->save();
-      return redirect()->back()->with("success", "User Bonus Succefully updated");
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->specialpcent = trim(strip_tags($request['percent']));
+        $wallet->save();
+        return redirect()->back()->with("success", "User Bonus Successfully updated");
     }
-
-
-
 
 
     public function userdestroy($id)
     {
-      $user=user::where('id', $id)->first();
-      $user->destroy();
-      return redirect()->back()->with("success", "User Succefully deleted");
+        $user = user::where('id', $id)->first();
+        $user->destroy();
+        return redirect()->back()->with("success", "User Successfully deleted");
     }
 
     public function userupdate(Request $request, $id)
     {
-      $user=user::where('id', $id)->first();
-      $user =new user();
-      $user->name=trim(strip_tags($request['name']));
-      $user->mobile=trim(strip_tags($request['phone']));
-      $user->email=trim(strip_tags($request['email']));
-      $user->password=Hash::make(trim(strip_tags($request['password'])));
-      $user->update();
-      return redirect()->back()->with("success", "User Succefully Updated");
+        $user = user::where('id', $id)->first();
+//        $user = new user();
+        $user->name = trim(strip_tags($request['name']));
+        $user->mobile = trim(strip_tags($request['phone']));
+        $user->email = trim(strip_tags($request['email']));
+        $user->password = Hash::make(trim(strip_tags($request['password'])));
+        $user->update();
+        return redirect()->back()->with("success", "User Successfully Updated");
     }
 
     public function serve()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
-        return view('admin.services');     }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            return view('admin.services');
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 
 
-    public function resetcard($id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->card_bonus=0;
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully Reseted User Card bonus");
+    public function resetcard($id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->card_bonus = 0;
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Reset User Card bonus");
 
     }
 
 
-
-
-    public function updatecard(request $request, $id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->card_bonus=$request['cbonus'];
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully Updated User Card bonus");
+    public function updatecard(request $request, $id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->card_bonus = $request['cbonus'];
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Updated User Card bonus");
 
     }
 
-    public function resetmonthly($id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->monthly_bonus=0;
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully Reseted User Monthly bonus");
+    public function resetmonthly($id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->monthly_bonus = 0;
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Reset User Monthly bonus");
     }
 
 
-
-
-    public function updatemonthly(Request $request, $id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->monthly_bonus=$request['mbonus'];
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully updated User Monthly bonus");
+    public function updatemonthly(Request $request, $id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->monthly_bonus = $request['mbonus'];
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully updated User Monthly bonus");
     }
 
-    public function resettravelling($id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->travelling_bonus=0;
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully Reseted User Travelling bonus");
+    public function resettravelling($id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->travelling_bonus = 0;
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Reset User Travelling bonus");
     }
 
-    public function updatetravelling(request $request, $id){
-      $wallet=wallet::where('owner_id', $id)->first();
-      $wallet->travelling_bonus=$request['tbonus'];
-      $wallet->save();
-      return redirect()->back()->with("success", "Successfully Updated User Travelling bonus");
+    public function updatetravelling(request $request, $id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->travelling_bonus = $request['tbonus'];
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Updated User Travelling bonus");
     }
 
-  public function resetfestival($id){
-    $wallet=wallet::where('owner_id', $id)->first();
-    $wallet->travelling_bonus=0;
-    $wallet->save();
-    return redirect()->back()->with("success", "Successfully Reseted User Festival bonus");
+    public function resetfestival($id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->travelling_bonus = 0;
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Reset User Festival bonus");
 
-  }
+    }
 
-  public function updatefestival(Request $request, $id){
-    $wallet=wallet::where('owner_id', $id)->first();
-    $wallet->travelling_bonus=$request['fbonus'];
-    $wallet->save();
-    return redirect()->back()->with("success", "Successfully Updated User Festival bonus");
+    public function updatefestival(Request $request, $id)
+    {
+        $wallet = wallet::where('owner_id', $id)->first();
+        $wallet->travelling_bonus = $request['fbonus'];
+        $wallet->save();
+        return redirect()->back()->with("success", "Successfully Updated User Festival bonus");
 
-  }
+    }
 
 
     public function webSettings()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1)
-      {
-        return view('admin.websettings');
-         }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            return view('admin.websettings');
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 
     public function usBonus()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1)
-      {
-        $bonus=Otherbonus::first();
-          return view('admin.generalbonus')->with(['bonus' => $bonus]);
-         }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            $bonus = Otherbonus::first();
+            return view('admin.generalbonus')->with(['bonus' => $bonus]);
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 
     public function spcBonus()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1)
-      {
-        $special=DB::table('users')
-        ->join('wallets','wallets.owner_id','=','users.id')
-        ->select('users.id','users.name','users.mobile','users.created_at','Users.email','users.status','users.gender','users.wallet_id','wallets.wallet_balance','wallets.card_bonus','wallets.travelling_bonus','wallets.monthly_bonus','wallets.festival_bonus','wallets.special','wallets.special_bonus','wallets.specialpcent')
-        ->where('wallets.special', 1)
-        ->get()->toArray();
-          return view('admin.specialbonus')->with(['special' => $special]);
-         }
-      else{
-        return redirect()->route('home');
-      }
-
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            $special = DB::table('users')
+                ->join('wallets', 'wallets.owner_id', '=', 'users.id')
+                ->select('users.id', 'users.name', 'users.mobile', 'users.created_at', 'Users.email', 'users.status', 'users.gender', 'users.wallet_id', 'wallets.wallet_balance', 'wallets.card_bonus', 'wallets.travelling_bonus', 'wallets.monthly_bonus', 'wallets.festival_bonus', 'wallets.special', 'wallets.special_bonus', 'wallets.specialpcent')
+                ->where('wallets.special', 1)
+                ->get()->toArray();
+            return view('admin.specialbonus')->with(['special' => $special]);
+        } else {
+            return redirect()->route('home');
+        }
 
 
     }
@@ -355,9 +345,9 @@ class AdminDashboardController extends Controller
     {
 
         $all = Cable::all();
-        $most_purchased =  Cable::select('service_type')
-           ->groupBy('service_type')
-       ->orderByRaw('COUNT(*) DESC')->first()->service_type;
+        $most_purchased = Cable::select('service_type')
+            ->groupBy('service_type')
+            ->orderByRaw('COUNT(*) DESC')->first()->service_type;
 
         $value = "";
         switch ($most_purchased) {
@@ -380,41 +370,38 @@ class AdminDashboardController extends Controller
         }
         $most_purchase_by = User::where('id', '=', Cable::select('user_id')
             ->groupBy('user_id')
-            ->orderByRaw('COUNT(*) DESC')->first()->user_id )->first();
+            ->orderByRaw('COUNT(*) DESC')->first()->user_id)->first();
         return view('admin.cable')->with([
-            'subscriptions'=>$all,
-            'most_purchased'=>$value,
-            'most_purchase_by'=>$most_purchase_by
+            'subscriptions' => $all,
+            'most_purchased' => $value,
+            'most_purchase_by' => $most_purchase_by
         ]);
     }
 
     public function dataPurchase()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
             return view('admin.data');
-             }
-      else{
+        } else {
 
-        return redirect()->route('home');
+            return redirect()->route('home');
 
 
-      }
+        }
 
     }
 
     public function electric()
     {
-      if (auth()->user()->isAdmin != 1) {
-          return redirect()->route('home');
-      }
-      else if(auth()->user()->isAdmin == 1){
-return view('admin.electricity');      }
-      else{
-        return redirect()->route('home');
-      }
+        if (auth()->user()->isAdmin != 1) {
+            return redirect()->route('home');
+        } else if (auth()->user()->isAdmin == 1) {
+            return view('admin.electricity');
+        } else {
+            return redirect()->route('home');
+        }
 
     }
 }
