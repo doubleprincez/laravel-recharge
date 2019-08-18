@@ -40,11 +40,8 @@
                 @include('layouts.sidenav')
             </div>
         </div>
-        <?php if(auth()->user()->isAdmin == 1){?><div class="panel-body"><a href="{{url('admin/routes')}}">Admin</a></div><?php } else echo '<div class="panel-heading">Normal User</div>';?>
 
         <div class="main-panel">
-
-
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
                 <div class="container-fluid">
@@ -73,6 +70,7 @@
                             </ul>
                         @endif
                         <ul class="navbar-nav pull-right">
+                            <li class="nav-item"> <?php if(auth()->user()->isAdmin == 1){?> <a href="{{url('cpanel/admin-page')}}">Admin</a> <?php } else echo ' Normal User ';?></li>
 
                             <li class="nav-item btn-rotate dropdown">
                                 <a class="nav-link dropdown-toggle" href=""

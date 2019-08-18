@@ -86,11 +86,10 @@
        <div class="card card-signin my-5">
          <div class="card-body">
            <h5 class="card-title text-center" style="font-size:25px;"><b>SIGN IN</b></h5>
-
              <form class="form-signin" method="POST" action="{{ route('login') }}">
                  @csrf
              <div class="form-group">
-               <input class="form-control" name="mobile" placeholder="Provide Mobile Number"  autofocus required>
+               <input type="number" class="form-control" name="mobile" placeholder="Provide Mobile Number"  autofocus required>
                <!-- <label for="inputEmail">Email address</label> -->
              </div>
 

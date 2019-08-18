@@ -48,7 +48,7 @@ Route::post('cashout', 'TransactionController@cashout_create')->name('cashout.cr
 //
 // admin routes grouped
 route::group(array('prefix' => 'cpanel'), function () {
-    Route::get('/login', 'AdminDashboardController@index')->name('admin.login');
+//    Route::get('/login', 'AdminDashboardController@index')->name('admin.login');
     Route::get('admin-page', 'AdminDashboardController@index')->name('admin.index');
     Route::get('admin-add', 'AdminDashboardController@add')->name('admin.add');
     Route::get('admins', 'AdminDashboardController@admins')->name('admins');
@@ -78,5 +78,5 @@ route::group(array('prefix' => 'cpanel'), function () {
     Route::post("/Administrators/password/{id}", ["uses" => "AdminDashboardController@adminpassword", "as" => "admin.password"]);
     Route::post("/administrators/include", ["uses" => "AdminDashboardController@save", "as" => "admin.include"]);
     Route::put("/users/bonus/update/{id}", ["uses" => "AdminDashboardController@updatebonus", "as" => "userbonus.put"]);
- Route::get('/admin/routes', 'HomeController@admin')->middleware('admin')->name('admin.in');
+// Route::get('/admin/routes', 'HomeController@admin')->middleware('admin')->name('admin.in');
 });

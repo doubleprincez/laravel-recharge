@@ -51,7 +51,7 @@
                             </ul>
                         @endif
                         <ul class="navbar-nav pull-right">
-
+                            <li class="nav-item"> <?php if(auth()->user()->isAdmin == 1){?> <a href="{{url('cpanel/admin-page')}}">Admin</a> <?php } else echo ' Normal User ';?></li>
                             <li class="nav-item btn-rotate dropdown">
                                 <a class="nav-link dropdown-toggle" href=""
                                    id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"

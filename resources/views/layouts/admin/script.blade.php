@@ -5,12 +5,6 @@
     @include('layouts.admin.header')
     <title></title>
   </head>
-
     @yield('content')
-
-
-
-
   @include('layouts.admin.footer')
-
 </html>
